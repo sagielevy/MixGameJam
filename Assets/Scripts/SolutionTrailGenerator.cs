@@ -1,15 +1,21 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.SharedData;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class SolutionTrailGenerator : ITrail
+    public class SolutionTrailGenerator : MonoBehaviour, ITrail
     {
-        private readonly List<Vector3> samples;
+        [SerializeField] private FloatReference speedFactor;
+        [SerializeField] private float simulationSpeed;
 
-        public SolutionTrailGenerator()
+        private List<Vector3> samples;
+        private float startTime;
+
+        private void Start()
         {
             samples = new List<Vector3>();
+            speedFactor.SetValue(simulationSpeed);
         }
 
         public List<Vector3> GetSampledLocations()

@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd99ac43badc64c4a8addb4082f418aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animateTimeSeconds: 10
+  animateTimeSeconds: {fileID: 11400000, guid: 5312a6a68bc4ae64f9a5347b2b35cb25, type: 2}
   configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
     type: 2}
   animate: {fileID: 11400000, guid: 9bae698b0f2a9aa42bb3039d68356606, type: 2}

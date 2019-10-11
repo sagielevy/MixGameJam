@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.SharedData;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -7,6 +8,7 @@ namespace Assets.Scripts
         [SerializeField] private float rotateSpeed = 1.5f;
         [SerializeField] private Vector3 rotationVector = Vector3.zero;
         [SerializeField] private BooleanReference animate;
+        [SerializeField] private FloatReference speedFactor;
         [SerializeField] private int Id;
 
         public void SetItemData(int id, float rotateSpeed, Vector3 rotationVector)
@@ -31,7 +33,7 @@ namespace Assets.Scripts
             if (animate.GetValue())
             {
                 transform.rotation *=
-                    Quaternion.Euler(rotationVector * Time.deltaTime * rotateSpeed);
+                    Quaternion.Euler(rotationVector * Time.deltaTime * rotateSpeed * speedFactor.GetValue());
             }
         }
     }

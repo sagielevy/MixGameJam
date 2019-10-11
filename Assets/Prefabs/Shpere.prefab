@@ -107,4 +107,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 100
   rotationVector: {x: 1, y: 0, z: 0}
-  booleanReference: {fileID: 11400000, guid: 9bae698b0f2a9aa42bb3039d68356606, type: 2}
+  animate: {fileID: 11400000, guid: 9bae698b0f2a9aa42bb3039d68356606, type: 2}
+  speedFactor: {fileID: 11400000, guid: c326a232338a3694fb4bff0bc93319f3, type: 2}
+  Id: 0

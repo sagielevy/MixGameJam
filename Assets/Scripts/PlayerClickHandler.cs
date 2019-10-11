@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.SharedData;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class PlayerClickHandler : MonoBehaviour
     {
-        [SerializeField] private float animateTimeSeconds = 10;
+        [SerializeField] private FloatReference animateTimeSeconds;
         [SerializeField] private LevelConfigurationReference configurationReference;
         [SerializeField] private BooleanReference animate;
         [SerializeField] private TrailSpawner prefab;
@@ -14,7 +15,7 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if (Time.time - clickStartTime >= animateTimeSeconds)
+            if (Time.time - clickStartTime >= animateTimeSeconds.GetValue())
             {
                 animate.SetValue(false);
             }
@@ -23,7 +24,7 @@ namespace Assets.Scripts
         private void HandlePlayerClick()
         {
             // Ignore extra clicks while animating
-            if (Time.time - clickStartTime < animateTimeSeconds)
+            if (Time.time - clickStartTime < animateTimeSeconds.GetValue())
             {
                 ClearOldTrail();
                 return;
@@ -48,7 +49,6 @@ namespace Assets.Scripts
         private void StartTrail(RaycastHit hit)
         {
             currSpawner = Instantiate(prefab, hit.point, Quaternion.identity, hit.transform);
-            currSpawner.Configure(animateTimeSeconds);
             clickStartTime = Time.time;
             animate.SetValue(true);
         }

@@ -140,5 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 873b49ded5de160488b458385b82b662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailRenderer: {fileID: 0}
-  sampleIntervalTimeSeconds: 0.1
+  sampleIntervalTimeSeconds: {fileID: 11400000, guid: c17b8e38a0582f14cb02285f736e5f10,
+    type: 2}
+  animateTimeSeconds: {fileID: 11400000, guid: 5312a6a68bc4ae64f9a5347b2b35cb25, type: 2}
