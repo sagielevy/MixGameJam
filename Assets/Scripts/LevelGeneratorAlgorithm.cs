@@ -15,7 +15,7 @@ namespace Assets.Scripts
             {
                 Item obj = new Item();
                 obj.id = i;
-                obj.parentId = this.pickParent(i, objsAmount);
+                obj.parentId = this.PickParent(i, i);
                 obj.scale = Random.Range(minScale, maxScale);
                 obj.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
                 obj.startingPosition = new Vector3(Random.Range(0, worldRadius), Random.Range(0, worldRadius), Random.Range(0, worldRadius)) ;
@@ -29,7 +29,7 @@ namespace Assets.Scripts
             return levelConfig;
         }
 
-        private int pickParent(int son_id, int objsNum)
+        private int PickParent(int son_id, int objsNum)
         {
             int j = 0;
             while (j == son_id)
