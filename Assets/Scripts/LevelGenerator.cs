@@ -16,7 +16,7 @@ namespace Assets.Scripts
         // TODO add more prefabs if more prototype items
         [SerializeField] private RotateItem Sphere;
 
-        private LevelGeneratorAlgorithm algorithm;
+        private ILevelGenerator algorithm;
         private LevelConfigurationReference configurationReference;
 
         private void Start()
@@ -27,7 +27,7 @@ namespace Assets.Scripts
 
         private void GenerateLevel()
         {
-            var output = algorithm.ItemPositions(minItemCount, maxItemCount, worldRadius,
+            var output = algorithm.GenerateLevel(minItemCount, maxItemCount, worldRadius,
                 minRotationSpeed, maxRotationSpeed, minScale, maxScale);
             configurationReference.SetLevelConfiguration(output);
 
