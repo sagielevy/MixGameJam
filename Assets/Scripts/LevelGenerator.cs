@@ -14,7 +14,7 @@ namespace Assets.Scripts
         [SerializeField] private GameObject world;
 
         // TODO add more prefabs if more prototype items
-        [SerializeField] private RotateItem Sphere;
+        [SerializeField] private ItemAnimator Sphere;
 
         private ILevelGenerator algorithm;
         private LevelConfigurationReference configurationReference;
@@ -32,12 +32,12 @@ namespace Assets.Scripts
             configurationReference.SetLevelConfiguration(output);
 
             DestroyCurrentItems();
-            
+            CreateItems();
         }
 
         private void DestroyCurrentItems()
         {
-            foreach (var item in world.GetComponentsInChildren<RotateItem>())
+            foreach (var item in world.GetComponentsInChildren<ItemAnimator>())
             {
                 Destroy(item.gameObject);
             }
@@ -47,18 +47,15 @@ namespace Assets.Scripts
         {
             foreach (var item in configurationReference.GetLevelConfiguration().items)
             {
-                var newItemObject = Instantiate(Sphere, item.startingPosition, Quaternion.identity);
+                var newItemObject = Instantiate(Sphere, Vector3.zero, Quaternion.identity);
 
                 newItemObject.transform.localScale = new Vector3(item.scale, item.scale, item.scale);
-                newItemObject.SetRotateData(item.rotationSpeed, item.rotateDirection);
-                newItemObject.transform.position = item.startingPosition;
-                newItemObject.name = item.id.ToString();
+                newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection);
+                
+                GameObject parent = null; // TODO hierarchy
+                newItemObject.transform.parent = parent.transform;
+                newItemObject.transform.localPosition = item.startingPosition;
             }
-        }
-
-        private void Update()
-        {
-
         }
     }
 }

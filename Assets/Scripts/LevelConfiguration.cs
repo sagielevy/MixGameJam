@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
+    [Serializable]
     public struct LevelConfiguration
     {
         public Item[] items;
         public Vector3 solutionStartPosition;
     }
 
+    [Serializable]
     public struct Item
     {
         public Vector3 startingPosition;
@@ -18,9 +21,10 @@ namespace Assets.Scripts
         public int parentId;
     }
 
+    [CreateAssetMenu]
     public class LevelConfigurationReference : ScriptableObject
     {
-        private LevelConfiguration levelConfiguration;
+        [SerializeField] private LevelConfiguration levelConfiguration;
 
         public LevelConfiguration GetLevelConfiguration()
         {
