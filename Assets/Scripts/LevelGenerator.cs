@@ -54,7 +54,7 @@ namespace Assets.Scripts
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection);
 
                 GameObject parent = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),
-                                                element => element.Id == item.parentId).gameObject;          
+                                                element => element.GetId() == item.parentId).gameObject;          
                 newItemObject.transform.parent = parent.transform;
                 newItemObject.transform.localPosition = item.startingPosition; ;
             }

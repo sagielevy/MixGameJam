@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3785806416878092443
+--- !u!1 &7928554594668637837
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3785806416878092436}
-  - component: {fileID: 3785806416878092437}
+  - component: {fileID: 869093068986513173}
+  - component: {fileID: 8391399131441611401}
   m_Layer: 0
-  m_Name: World
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3785806416878092436
+--- !u!4 &869093068986513173
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3785806416878092443}
+  m_GameObject: {fileID: 7928554594668637837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.7418065, y: 2.1258955, z: -0.5683341}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3785806416878092437
+--- !u!114 &8391399131441611401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3785806416878092443}
+  m_GameObject: {fileID: 7928554594668637837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f3e470fcea8a814a8727aba23516c77, type: 3}
+  m_Script: {fileID: 11500000, guid: fd99ac43badc64c4a8addb4082f418aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 50
-  rotationVector: {x: 0, y: 1, z: 0}
+  animateTimeSeconds: 10
+  configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
+    type: 2}
   animate: {fileID: 11400000, guid: 9bae698b0f2a9aa42bb3039d68356606, type: 2}
+  prefab: {fileID: -7514082944272823768, guid: 505ca6693aa8912458636750f18c7f98, type: 3}

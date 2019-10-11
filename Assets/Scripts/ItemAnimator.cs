@@ -7,14 +7,18 @@ namespace Assets.Scripts
         [SerializeField] private float rotateSpeed = 1.5f;
         [SerializeField] private Vector3 rotationVector = Vector3.zero;
         [SerializeField] private BooleanReference animate;
-
-        public int Id { get; private set; }
+        [SerializeField] private int Id;
 
         public void SetItemData(int id, float rotateSpeed, Vector3 rotationVector)
         {
             Id = id;
             this.rotateSpeed = rotateSpeed;
             this.rotationVector = rotationVector.normalized;
+        }
+
+        public int GetId()
+        {
+            return Id;
         }
 
         void Start()

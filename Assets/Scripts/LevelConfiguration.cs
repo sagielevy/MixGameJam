@@ -21,21 +21,5 @@ namespace Assets.Scripts
         public int parentId;
     }
 
-    [CreateAssetMenu]
-    public class LevelConfigurationReference : ScriptableObject
-    {
-        [SerializeField] private LevelConfiguration levelConfiguration;
-
-        public LevelConfiguration GetLevelConfiguration()
-        {
-            return levelConfiguration;
-        }
-
-        public void SetLevelConfiguration(LevelConfiguration value)
-        {
-            levelConfiguration = value;
-        }
-    }
-
     // TODO add game event of type LevelConfigurationReference
 }
