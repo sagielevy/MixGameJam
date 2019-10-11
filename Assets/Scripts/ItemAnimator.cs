@@ -6,9 +6,9 @@ namespace Assets.Scripts
     {
         [SerializeField] private float rotateSpeed = 1.5f;
         [SerializeField] private Vector3 rotationVector = Vector3.zero;
+        [SerializeField] private BooleanReference animate;
 
         public int Id { get; private set; }
-        public bool animate;
 
         public void SetItemData(int id, float rotateSpeed, Vector3 rotationVector)
         {
@@ -24,7 +24,7 @@ namespace Assets.Scripts
 
         void Update()
         {
-            if (animate)
+            if (animate.GetValue())
             {
                 transform.rotation *=
                     Quaternion.Euler(rotationVector * Time.deltaTime * rotateSpeed);
