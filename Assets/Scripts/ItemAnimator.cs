@@ -8,10 +8,11 @@ namespace Assets.Scripts
         [SerializeField] private Vector3 rotationVector = Vector3.zero;
 
         public int Id { get; private set; }
+        public bool animate;
 
         public void SetItemData(int id, float rotateSpeed, Vector3 rotationVector)
         {
-            this.Id = id;
+            Id = id;
             this.rotateSpeed = rotateSpeed;
             this.rotationVector = rotationVector.normalized;
         }
@@ -23,7 +24,11 @@ namespace Assets.Scripts
 
         void Update()
         {
-            transform.rotation *= Quaternion.Euler(rotationVector * Time.deltaTime * rotateSpeed);
+            if (animate)
+            {
+                transform.rotation *=
+                    Quaternion.Euler(rotationVector * Time.deltaTime * rotateSpeed);
+            }
         }
     }
 }
