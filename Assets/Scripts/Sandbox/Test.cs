@@ -10,5 +10,10 @@ namespace Assets.Scripts.Sandbox
             var end = new Vector3(0, 0, 0);
             Debug.DrawLine(start, end, Color.blue, 200);
         }
+
+        void Update()
+        {
+
+        }
     }
 }
