@@ -4,16 +4,22 @@ namespace Assets.Scripts
 {
     public interface ILevelGenerator
     {
-        ItemData[] ItemPositions(int minItemCount,
-            int maxItemCount,
-            float worldRadius,
-            float minRotationSpeed,
-            float maxRotationSpeed,
-            float minScale,
-            float maxScale);
+        LevelConfiguration GenerateLevel(int minItemCount,
+                                         int maxItemCount,
+                                         float worldRadius,
+                                         float minRotationSpeed,
+                                         float maxRotationSpeed,
+                                         float minScale,
+                                         float maxScale);
     }
 
-    public struct ItemData
+    public struct LevelConfiguration
+    {
+        public Item[] items;
+        public Vector3 solutionStartPosition;
+    }
+
+    public struct Item
     {
         public Vector3 startingPosition;
         public Vector3 rotateDirection;

@@ -11,7 +11,25 @@ namespace Assets.Scripts
         public float maxRotationSpeed = 200;
         public float minScale = 1;
         public float maxScale = 1;
+        public float animateTimeSeconds = 10;
 
         private LevelGeneratorAlgorithm algorithm;
+
+        private void Start()
+        {
+            algorithm = new LevelGeneratorAlgorithm();
+            GenerateLevel();
+        }
+
+        private void GenerateLevel()
+        {
+            var output = algorithm.ItemPositions(minItemCount, maxItemCount, worldRadius,
+                minRotationSpeed, maxRotationSpeed, minScale, maxScale);
+        }
+
+        private void Update()
+        {
+
+        }
     }
 }
