@@ -4,16 +4,20 @@ namespace Assets.Scripts
 {
     public class LevelGenerator : MonoBehaviour
     {
-        public int minItemCount = 1;
-        public int maxItemCount = 3;
-        public float worldRadius = 10;
-        public float minRotationSpeed = 50;
-        public float maxRotationSpeed = 200;
-        public float minScale = 1;
-        public float maxScale = 1;
-        public float animateTimeSeconds = 10;
+        [SerializeField] private int minItemCount = 1;
+        [SerializeField] private int maxItemCount = 3;
+        [SerializeField] private float worldRadius = 10;
+        [SerializeField] private float minRotationSpeed = 50;
+        [SerializeField] private float maxRotationSpeed = 200;
+        [SerializeField] private float minScale = 1;
+        [SerializeField] private float maxScale = 1;
+        [SerializeField] private GameObject world;
+
+        // TODO add more prefabs if more prototype items
+        [SerializeField] private RotateItem Sphere;
 
         private LevelGeneratorAlgorithm algorithm;
+        private LevelConfigurationReference configurationReference;
 
         private void Start()
         {
@@ -25,6 +29,31 @@ namespace Assets.Scripts
         {
             var output = algorithm.ItemPositions(minItemCount, maxItemCount, worldRadius,
                 minRotationSpeed, maxRotationSpeed, minScale, maxScale);
+            configurationReference.SetLevelConfiguration(output);
+
+            DestroyCurrentItems();
+            
+        }
+
+        private void DestroyCurrentItems()
+        {
+            foreach (var item in world.GetComponentsInChildren<RotateItem>())
+            {
+                Destroy(item.gameObject);
+            }
+        }
+
+        private void CreateItems()
+        {
+            foreach (var item in configurationReference.GetLevelConfiguration().items)
+            {
+                var newItemObject = Instantiate(Sphere, item.startingPosition, Quaternion.identity);
+
+                newItemObject.transform.localScale = new Vector3(item.scale, item.scale, item.scale);
+                newItemObject.SetRotateData(item.rotationSpeed, item.rotateDirection);
+                newItemObject.transform.position = item.startingPosition;
+                newItemObject.name = item.id.ToString();
+            }
         }
 
         private void Update()
