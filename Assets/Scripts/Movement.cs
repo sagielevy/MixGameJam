@@ -4,22 +4,15 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
 
-    public float speed;
-    public Transform target;
-
+    // Update is called once per frame
     void Update()
     {
-        transform.LookAt(target);
-
-        if (Input.GetAxis("Vertical") != 0)
-        {
-            transform.Translate(transform.up * Input.GetAxis("Vertical") * Time.deltaTime * speed); //.up = positive y
-        }
-
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            transform.Translate(transform.right * Input.GetAxis("Horizontal") * Time.deltaTime * speed); //.right = positive x
-        }
+        
     }
 }

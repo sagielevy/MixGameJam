@@ -12,12 +12,13 @@ namespace Assets.Scripts
         [SerializeField] private float minScale = 1;
         [SerializeField] private float maxScale = 1;
         [SerializeField] private GameObject world;
+        [SerializeField] private LevelConfigurationReference configurationReference;
 
         // TODO add more prefabs if more prototype items
         [SerializeField] private ItemAnimator sphere;
 
         private ILevelGenerator algorithm;
-        private LevelConfigurationReference configurationReference;
+        
 
         private void Start()
         {

@@ -51,4 +51,6 @@ MonoBehaviour:
   minScale: 1
   maxScale: 1
   world: {fileID: 3785806416878092443, guid: e613d2b3156f70b4ca4fa0cd4fbfb77f, type: 3}
+  configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
+    type: 2}
   sphere: {fileID: 6921333095384393277, guid: 7262456eab59d714e85c9d630dd0ecf7, type: 3}
