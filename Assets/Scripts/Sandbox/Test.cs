@@ -11,25 +11,25 @@ namespace Assets.Scripts.Sandbox
     {
         [SerializeField] private int numberOfLines;
 
-        [SerializeField] private int x0;
-        [SerializeField] private int y0;
-        [SerializeField] private int a;
-        [SerializeField] private int b;
-        [SerializeField] private int c;
-        [SerializeField] private int d;
-        [SerializeField] private int e;
-        [SerializeField] private int f;
-        [SerializeField] private int g;
-        [SerializeField] private int h;
+        [SerializeField] private float x0;
+        [SerializeField] private float y0;
+        [SerializeField] private float at;
+        [SerializeField] private float bt;
+        [SerializeField] private float c;
+        [SerializeField] private float dx;
+        [SerializeField] private float ey;
+        [SerializeField] private float fxy;
+        [SerializeField] private float gxx;
+        [SerializeField] private float hyy;
 
         void Start()
         {
             Vector3 prev = new Vector3(0,0,0);
-
+            var dataFactory = new MockDataFactory(this);
             foreach (int index in Enumerable.Range(0, numberOfLines))
             {
-                var dataFactory = new MockDataFactory(this);
                 var current = dataFactory.YieldNewPoint();
+                Debug.LogFormat($"current: {current}, prev: {prev}");
                 Debug.DrawLine(prev, current, Color.blue, 200);
                 prev = current;
             }
@@ -59,10 +59,11 @@ namespace Assets.Scripts.Sandbox
             {
                 while (true)
                 {
-                    // z(t) = f(x(t),y(t)) = f(at,bt) = c + t[ad+be]+t^2[fab+ga^2+hb^2]
-                    var x = test.x0 + test.a * t;
-                    var y = test.y0 + test.b * t;
-                    var z = test.c + test.d * x + test.e * y + test.f * x * y + test.g * x * x + test.h * y * y;
+                    // x,y = a,b * t
+                    // z(t) = c + dx + ey + fxy + gxx + hyy
+                    var x = test.x0 + test.at * t;
+                    var y = test.y0 + test.bt * t;
+                    var z = test.c + test.dx * x + test.ey * y + test.fxy * x * y + test.gxx * x * x + test.hyy * y * y;
                     yield return new Vector3(x, y, z);
                     t++;
                 }

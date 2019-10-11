@@ -240,6 +240,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 360d6b196598f3d4c8ec9172415df5cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfLines: 97
+  x0: 0
+  y0: 0
+  at: 0.01
+  bt: 0.01
+  c: 0
+  dx: 0
+  ey: 0
+  fxy: 0
+  gxx: 1
+  hyy: 1
 --- !u!4 &2008850131
 Transform:
   m_ObjectHideFlags: 0
