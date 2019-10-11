@@ -9,6 +9,6 @@ namespace Assets.Scripts
 {
     public interface ITrail
     {
-        List<Vector3> getSampledLocations();
+        List<Vector3> GetSampledLocations();
     }
 }

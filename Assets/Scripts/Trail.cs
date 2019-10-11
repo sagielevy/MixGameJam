@@ -14,7 +14,7 @@ namespace Assets.Scripts
         {
             this.Samples = new List<Vector3>(samples);
         }
-        public List<Vector3> getSampledLocations()
+        public List<Vector3> GetSampledLocations()
         {
             return this.Samples;
         }
