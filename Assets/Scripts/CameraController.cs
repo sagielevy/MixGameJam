@@ -15,7 +15,7 @@ namespace Assets.Scripts
         private float desiredDistance = 0.0f;
         public float X_MouseSensitivity = 5.0f;
         public float Y_MouseSensitivity = 5.0f;
-//        public float MouseWheelSensitivity = 5.0f;
+        public float MouseWheelSensitivity = 5.0f;
         public float Y_MinLimit = -40.0f;
         public float Y_MaxLimit = 80.0f;
         public float DistanceSmooth = 0.05f;
@@ -58,7 +58,7 @@ namespace Assets.Scripts
 
         void HandlePlayerInput()
         {
-            //var deadZone = 0.01f; // mousewheel deadZone
+            var deadZone = 0.01f; // mousewheel deadZone
 
             if (Input.GetMouseButton(1)) // Right click
             {
@@ -68,6 +68,13 @@ namespace Assets.Scripts
 
             // This is where the mouseY is limited - Helper script
             mouseY = ClampAngle(mouseY, Y_MinLimit, Y_MaxLimit);
+
+            // Get Mouse Wheel Input
+            if (Input.GetAxis("Mouse ScrollWheel") < -deadZone || Input.GetAxis("Mouse ScrollWheel") > deadZone)
+            {
+                desiredDistance = Mathf.Clamp(Distance - (Input.GetAxis("Mouse ScrollWheel") * MouseWheelSensitivity),
+                    DistanceMin, DistanceMax);
+            }
         }
 
         void CalculateDesiredPosition()

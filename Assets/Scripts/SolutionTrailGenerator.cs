@@ -10,7 +10,7 @@ namespace Assets.Scripts
         [SerializeField] private BooleanReference animate;
         [SerializeField] private IntReference samplesCount;
         [SerializeField] private float simulationSpeed;
-        [SerializeField] private LineRenderer solutionRenderer;
+        [SerializeField] private SolutionTrailViewer solutionViewer;
 
         private int currSampleIndex;
         private Vector3[] samples;
@@ -26,7 +26,7 @@ namespace Assets.Scripts
         {
             transform.parent = parent;
             transform.localPosition = solutionStartPosition;
-            solutionRenderer.SetPositions(new Vector3[]{});
+            solutionViewer.ClearTrail();
             this.simulationComplete = simulationComplete;
             animate.SetValue(true);
             Time.timeScale = simulationSpeed;
@@ -59,9 +59,7 @@ namespace Assets.Scripts
             transform.parent = null;
             simulationComplete(this);
             simulationComplete = null;
-            
-            solutionRenderer.positionCount = samples.Length;
-            solutionRenderer.SetPositions(samples);
+            solutionViewer.GenerateSolution(samples);
         }
     }
 }

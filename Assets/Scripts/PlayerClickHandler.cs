@@ -19,12 +19,6 @@ namespace Assets.Scripts
             if (wasAnimating && !animate.GetValue())
             {
                 wasAnimating = false;
-
-                foreach (var sampledLocation in currSpawner.GetSampledLocations())
-                {
-                    Debug.Log(sampledLocation);
-                }
-
                 levelHandler.AttemptPlayerSolution(currSpawner);
             }
 
