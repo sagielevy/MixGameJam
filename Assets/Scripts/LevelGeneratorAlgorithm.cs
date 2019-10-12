@@ -13,19 +13,36 @@ namespace Assets.Scripts
             float maxScale)
         {
             int objsAmount = Random.Range(minItemCount, maxItemCount);
-            
             var levelObjects = new Dictionary<int, Item>();
+            Item worldConfig = GenerateWorldConfig(worldRadius, minRotationSpeed, maxRotationSpeed, levelObjects);
+            GenerateGameObjectsConfig(worldRadius, minRotationSpeed, maxRotationSpeed, minScale, maxScale, objsAmount, levelObjects, worldConfig);
             
-            // Create World Object
-            var worldConfig = new Item();
-            worldConfig.id = 0;
-            worldConfig.parent = worldConfig;
-            worldConfig.rotateDirection = generateRandVec3(worldRadius);
-            worldConfig.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
-            levelObjects.Add(worldConfig.id, worldConfig);
+            int solultionObjId;
+            Vector3 solutionPosition;
+            GenerateSolutionConfig(objsAmount, levelObjects, out solultionObjId, out solutionPosition);
 
-            int id = 1;
-            while (id <= objsAmount)
+            LevelConfiguration levelConfig = new LevelConfiguration();
+            levelConfig.items = levelObjects.Values.ToArray();
+            levelConfig.solutionItemId = solultionObjId;
+            levelConfig.solutionStartPosition = solutionPosition;
+            return levelConfig;
+        }
+
+        private static void GenerateSolutionConfig(int objsAmount, Dictionary<int, Item> levelObjects, out int solultionObjId, out Vector3 solutionPosition)
+        {
+            solultionObjId = Random.Range(1, objsAmount + 1);
+            float theta = Random.Range(0.0f, 180.0f);
+            float phi = Random.Range(0.0f, 360.0f);
+            float radius = levelObjects[solultionObjId].scale / 2;
+            float xVal = radius * Mathf.Sin(theta) * Mathf.Cos(phi);
+            float yVal = radius * Mathf.Sin(theta) * Mathf.Sin(phi);
+            float zVal = radius * Mathf.Cos(theta);
+            solutionPosition = new Vector3(xVal, yVal, zVal);
+        }
+
+        private void GenerateGameObjectsConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, float minScale, float maxScale, int objsAmount, Dictionary<int, Item> levelObjects, Item worldConfig)
+        {
+            for (int id = 1; id <= objsAmount; ++id)
             {
                 Item obj = new Item();
                 obj.id = id;
@@ -41,24 +58,21 @@ namespace Assets.Scripts
                     obj.startingPosition = new Vector3((obj.scale + obj.parent.scale) / 2, 0, 0);
                 }
                 obj.rotateDirection = generateRandVec3(worldRadius);
-                levelObjects.Add(id++, obj);
+                levelObjects.Add(id, obj);
             }
-
-            int solultionObjId = Random.Range(1, objsAmount+1);
-            float theta = Random.Range(0.0f, 180.0f);
-            float phi = Random.Range(0.0f, 360.0f);
-            float radius = levelObjects[solultionObjId].scale / 2;
-            float xVal = radius * Mathf.Sin(theta) * Mathf.Cos(phi);
-            float yVal = radius * Mathf.Sin(theta) * Mathf.Sin(phi);
-            float zVal = radius * Mathf.Cos(theta);
-            Vector3 solutionPosition = new Vector3(xVal,yVal,zVal);
-            
-            LevelConfiguration levelConfig = new LevelConfiguration();
-            levelConfig.items = levelObjects.Values.ToArray();
-            levelConfig.solutionItemId = solultionObjId;
-            levelConfig.solutionStartPosition = solutionPosition;
-            return levelConfig;
         }
+
+        private Item GenerateWorldConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, Dictionary<int, Item> levelObjects)
+        {
+            var worldConfig = new Item();
+            worldConfig.id = 0;
+            worldConfig.parent = worldConfig;
+            worldConfig.rotateDirection = generateRandVec3(worldRadius);
+            worldConfig.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
+            levelObjects.Add(worldConfig.id, worldConfig);
+            return worldConfig;
+        }
+
         private Vector3 generateRandVec3(float worldRadius)
         {
             return new Vector3(Random.Range(0, worldRadius),
