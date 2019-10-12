@@ -14,8 +14,7 @@ namespace Assets.Scripts
         {
             int objsAmount = Random.Range(minItemCount, maxItemCount);
             var levelObjects = new Dictionary<int, Item>();
-            Item worldConfig = GenerateWorldConfig(worldRadius, minRotationSpeed, maxRotationSpeed, levelObjects);
-            GenerateGameObjectsConfig(worldRadius, minRotationSpeed, maxRotationSpeed, minScale, maxScale, objsAmount, levelObjects, worldConfig);
+            GenerateGameObjectsConfig(worldRadius, minRotationSpeed, maxRotationSpeed, minScale, maxScale, objsAmount, levelObjects);
             
             int solultionObjId;
             Vector3 solutionPosition;
@@ -40,22 +39,30 @@ namespace Assets.Scripts
             solutionPosition = new Vector3(xVal, yVal, zVal);
         }
 
-        private void GenerateGameObjectsConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, float minScale, float maxScale, int objsAmount, Dictionary<int, Item> levelObjects, Item worldConfig)
+        private void GenerateGameObjectsConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, float minScale, float maxScale, int objsAmount, Dictionary<int, Item> levelObjects)
         {
             for (int id = 1; id <= objsAmount; ++id)
             {
                 Item obj = new Item();
                 obj.id = id;
-                obj.parent = levelObjects[Random.Range(0, id)];
+                int parentId = Random.Range(0, id);
+                if (parentId == 0)
+                {
+                    obj.parent = null;
+                }
+                else
+                {
+                    obj.parent = levelObjects[parentId];
+                }
                 obj.scale = Random.Range(minScale, maxScale);
                 obj.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
-                if (obj.parent == worldConfig)
+                if (obj.parent == null)
                 {
                     obj.startingPosition = generateRandVec3(worldRadius);
                 }
                 else
                 {
-                    obj.startingPosition = new Vector3((obj.scale + obj.parent.scale) / 2, 0, 0);
+                    obj.startingPosition = new Vector3((obj.scale + obj.parent.scale) / 2.0f, 0, 0);
                 }
                 obj.rotateDirection = generateRandVec3(worldRadius);
                 levelObjects.Add(id, obj);

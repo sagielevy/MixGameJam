@@ -50,7 +50,6 @@ MonoBehaviour:
   maxRotationSpeed: 200
   minScale: 1
   maxScale: 3
-  worldId: 0
   world: {fileID: 0}
   configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
     type: 2}

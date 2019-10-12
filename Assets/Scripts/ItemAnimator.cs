@@ -19,7 +19,6 @@ namespace Assets.Scripts
             this.rotateSpeed = rotateSpeed;
             this.rotationVector = rotationVector.normalized;
             this.arrowsHint = arrowsHint;
-            transform.rotation = Quaternion.identity;
         }
 
         public int GetId()

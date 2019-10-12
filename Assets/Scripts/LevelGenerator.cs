@@ -13,8 +13,7 @@ namespace Assets.Scripts
         [SerializeField] private float maxRotationSpeed;
         [SerializeField] private float minScale;
         [SerializeField] private float maxScale;
-        [SerializeField] private int worldId;
-        [SerializeField] private ItemAnimator world;
+        [SerializeField] private Transform world;
         [SerializeField] private LevelConfigurationReference configurationReference;
 
         [SerializeField] private ArrowHintRotator arrowsPrefab;
@@ -22,11 +21,16 @@ namespace Assets.Scripts
 
         private ILevelGenerator algorithm;
         private List<ArrowHintRotator> rotators;
+        private List<ItemAnimator> items;
+
+        List<Color> colors;
 
         private void Awake()
         {
             algorithm = new LevelGeneratorAlgorithm();
             rotators = new List<ArrowHintRotator>();
+            items = new List<ItemAnimator>();
+            colors = new List<Color> { Color.red, Color.green, Color.blue, Color.yellow, Color.white, Color.magenta };
         }
 
         public void GenerateNewLevel()
@@ -38,21 +42,15 @@ namespace Assets.Scripts
 
         public void LoadGeneratedLevel()
         {
-            var worldItemData = Array.Find(configurationReference.GetLevelConfiguration().items,
-                                item => item.id == worldId);
-            world.SetItemData(worldId, worldItemData.rotationSpeed, worldItemData.rotateDirection, null);
             DestroyCurrentItems();
             CreateItems();
         }
 
         private void DestroyCurrentItems()
         {
-            foreach (var item in world.GetComponentsInChildren<ItemAnimator>()) 
+            foreach (var item in items) 
             {
-                if (item != world)
-                {
-                    Destroy(item.gameObject);
-                }
+                Destroy(item.gameObject);
             }
 
             foreach (var arrowHintRotator in rotators)
@@ -61,50 +59,50 @@ namespace Assets.Scripts
             }
 
             rotators.Clear();
+            items.Clear();
         }
-        
-        // filth
-        private int colorUsed = 0;
-        List<Color> colors = new List<Color> { Color.red, Color.green, Color.blue, Color.yellow, Color.white, Color.magenta };
+
 
         private void CreateItems()
         {
+            int colorUsed = 0;
+
             foreach (var item in configurationReference.GetLevelConfiguration().items)
             {
                 var newItemObject = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+                items.Add(newItemObject);
                 newItemObject.transform.localScale = new Vector3(item.scale, item.scale, item.scale);
-
-                var parent = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),element => element.GetId() == item.parent.id).gameObject;          
-                newItemObject.transform.parent = parent.transform;
-                newItemObject.transform.localPosition = item.startingPosition;
-
-
-                ArrowHintRotator arrowsHint = null;
-
-                if (item.id != worldId)
+                Transform parent = null;
+                
+                if (item.parent != null)
                 {
-                    arrowsHint = Instantiate(arrowsPrefab, Vector3.zero, Quaternion.identity);
-                    arrowsHint.transform.position = newItemObject.transform.position;
-                    arrowsHint.transform.localRotation = newItemObject.transform.localRotation;
-                    arrowsHint.transform.localScale *= item.scale;
-                    rotators.Add(arrowsHint);
+                    parent = items.Find(element => element.GetId() == item.parent.id).transform; 
+                }
+                else
+                {
+                    parent = world;
                 }
 
+                newItemObject.transform.parent = parent;
+                newItemObject.transform.localPosition = item.startingPosition;
+
+                ArrowHintRotator arrowsHint = null;
+                arrowsHint = Instantiate(arrowsPrefab, Vector3.zero, Quaternion.identity);
+                arrowsHint.transform.position = newItemObject.transform.position;
+                arrowsHint.transform.rotation = Quaternion.AngleAxis(90, item.rotateDirection);
+                arrowsHint.transform.localScale *= item.scale;
+                rotators.Add(arrowsHint);
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection, arrowsHint);
 
-                if (parent == world.gameObject)
+                if (parent == world)
                 {
                     newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
                     colorUsed++;
                 }
                 else
                 {
-                    newItemObject.GetComponent<MeshRenderer>().material.SetColor(
-                        "son_color",
-                        new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
-                        parent.GetComponent<MeshRenderer>().material.color.g,
-                        parent.GetComponent<MeshRenderer>().material.color.b));
-
+                    newItemObject.GetComponent<MeshRenderer>().material.color =
+                        parent.GetComponent<MeshRenderer>().material.color * 1.1f;
                 }
             }
         }

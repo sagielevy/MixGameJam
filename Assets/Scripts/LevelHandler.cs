@@ -14,7 +14,7 @@ namespace Assets.Scripts
         [SerializeField] private SolutionTrailGenerator solutionTrailGenerator;
         [SerializeField] private float validatorThreshold = 0.2f;
         [SerializeField] private Image loadingScreen;
-        [SerializeField] private ItemAnimator world;
+        [SerializeField] private Transform world;
 
         private ITrailValidator validator;
         private ITrail solutionTrail;
