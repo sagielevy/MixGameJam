@@ -96,7 +96,8 @@ namespace Assets.Scripts
 
                 var arrowsHint = Instantiate(arrowsPrefab, Vector3.zero, Quaternion.identity);
                 arrowsHint.transform.position = newItemObject.transform.position;
-                arrowsHint.transform.rotation = Quaternion.LookRotation(Vector3.forward, item.rotateDirection);
+                var newForward = Vector3.ProjectOnPlane(Vector3.forward, item.rotateDirection).normalized; // TODO not working
+                arrowsHint.transform.rotation = Quaternion.LookRotation(newForward, item.rotateDirection); 
                 arrowsHint.transform.localScale *= item.aggregatedScale;
                 rotators.Add(arrowsHint);
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection, arrowsHint);

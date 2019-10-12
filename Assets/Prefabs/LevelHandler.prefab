@@ -48,5 +48,7 @@ MonoBehaviour:
     type: 2}
   levelGenerator: {fileID: 0}
   solutionTrailGenerator: {fileID: 0}
-  validatorThreshold: 0.2
+  validatorThreshold: 0.3
   loadingScreen: {fileID: 0}
+  world: {fileID: 0}
+  gameResult: {fileID: 0}

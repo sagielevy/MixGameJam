@@ -61,7 +61,8 @@ namespace Assets.Scripts
                     currItem.startingPosition = normalizedDirection * (currItem.scale + 1) * sphereRadius;
                     currItem.aggregatedScale = CalcAggregatedScale(currItem);
                 }
-                currItem.rotateDirection = generateRandVec3(worldRadius);
+
+                currItem.rotateDirection = generateRandVec3(worldRadius).normalized;
                 levelObjects.Add(id, currItem);
             }
         }
@@ -80,16 +81,16 @@ namespace Assets.Scripts
             return scale;
         }
 
-        private Item GenerateWorldConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, Dictionary<int, Item> levelObjects)
-        {
-            var worldConfig = new Item();
-            worldConfig.id = 0;
-            worldConfig.parent = worldConfig;
-            worldConfig.rotateDirection = generateRandVec3(worldRadius);
-            worldConfig.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
-            levelObjects.Add(worldConfig.id, worldConfig);
-            return worldConfig;
-        }
+        //private Item GenerateWorldConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, Dictionary<int, Item> levelObjects)
+        //{
+        //    var worldConfig = new Item();
+        //    worldConfig.id = 0;
+        //    worldConfig.parent = worldConfig;
+        //    worldConfig.rotateDirection = generateRandVec3(worldRadius).normalized;
+        //    worldConfig.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
+        //    levelObjects.Add(worldConfig.id, worldConfig);
+        //    return worldConfig;
+        //}
 
         private Vector3 generateRandVec3(float worldRadius)
         {
