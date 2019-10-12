@@ -19,6 +19,8 @@ namespace Assets.Scripts
         [SerializeField] private ArrowHintRotator arrowsPrefab;
         [SerializeField] private ItemAnimator spherePrefab;
 
+        [SerializeField] private float colorGain;
+
         private ILevelGenerator algorithm;
         private List<ArrowHintRotator> rotators;
         private List<ItemAnimator> items;
@@ -102,7 +104,7 @@ namespace Assets.Scripts
                 else
                 {
                     newItemObject.GetComponent<MeshRenderer>().material.color =
-                        parent.GetComponent<MeshRenderer>().material.color * 1.1f;
+                        parent.GetComponent<MeshRenderer>().material.color * colorGain;
                 }
             }
         }
