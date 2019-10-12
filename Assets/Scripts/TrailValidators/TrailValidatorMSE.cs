@@ -24,7 +24,8 @@ namespace Assets.Scripts
             var normDiff = diff.Select(d => d.magnitude);
             var sumNormDiff = normDiff.Aggregate(0.0, (x, y) => x + y);
             var mse = sumNormDiff / diff.Count();
-            bool isValid = mse < threshold;
+            bool isValid = mse <= threshold;
+            Debug.LogFormat($"mse: {mse}");
             return isValid;
         }
     }

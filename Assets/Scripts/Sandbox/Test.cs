@@ -32,18 +32,20 @@ namespace Assets.Scripts.Sandbox
         [SerializeField] private float samplingRate;
         [SerializeField] private float tSamplesDiff;
 
+        [SerializeField] private float allowedError;
+
         ITrailValidator validator;
 
         void Start()
         {
-            validator = new TrailValidatorMSE(0.1f);
+            validator = new TrailValidatorMSE(allowedError);
         }
 
         void Update()
         {
             void DrawLine(Vector3 start, Vector3 end, Color color)
             {
-                Debug.LogFormat($"start: {start}, end: {end}");
+                //Debug.LogFormat($"start: {start}, end: {end}");
                 Debug.DrawLine(start, end, color, 0.1f);
             }
 
@@ -76,6 +78,20 @@ namespace Assets.Scripts.Sandbox
 
             DrawSampledTrails(referenceSamples, Color.blue);
             DrawSampledTrails(movingSamples, Color.red);
+
+            ValidateCurves(referenceSamples, movingSamples);
+        }
+
+        private void ValidateCurves(ITrail referenceSamples, ITrail movingSamples)
+        {
+            if (validator.Validate(referenceSamples, movingSamples))
+            {
+                Debug.LogFormat("Curves are close enough");
+            }
+            else
+            {
+                Debug.LogFormat("Curves are too far");
+            }
         }
 
         private class MockDataFactory
