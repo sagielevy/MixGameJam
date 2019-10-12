@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -217,7 +217,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.7247612e+25, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 4e-45}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -425,7 +425,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085228712}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -451,6 +451,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1146238356}
+  - {fileID: 1413807127}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -483,6 +484,85 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3785806417693845692}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1413807126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1413807127}
+  - component: {fileID: 1413807129}
+  - component: {fileID: 1413807128}
+  m_Layer: 5
+  m_Name: GameResult
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1413807127
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413807126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1085228716}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4.3, y: -8.1}
+  m_SizeDelta: {x: 699, y: 153.1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1413807128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413807126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 35
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1413807129
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413807126}
+  m_CullTransparentMesh: 0
 --- !u!1 &1441529761
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,11 +733,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1085228716}
     m_Modifications:
-    - target: {fileID: 3585523167114041885, guid: 96781205af87ea14a900734839ba0a37,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3585523167114041883, guid: 96781205af87ea14a900734839ba0a37,
         type: 3}
       propertyPath: m_Name
@@ -767,6 +842,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3585523167114041885, guid: 96781205af87ea14a900734839ba0a37,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96781205af87ea14a900734839ba0a37, type: 3}
@@ -926,6 +1006,11 @@ PrefabInstance:
       propertyPath: world
       value: 
       objectReference: {fileID: 1241339091}
+    - target: {fileID: 1111716862723274804, guid: f45cbb35d79f050469361d069bc02062,
+        type: 3}
+      propertyPath: gameResult
+      value: 
+      objectReference: {fileID: 1413807128}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f45cbb35d79f050469361d069bc02062, type: 3}
 --- !u!114 &4170236256212709175 stripped
@@ -1021,16 +1106,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SolutionTrailGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 7451304922045897168, guid: 71d9984eaa135f44fbc6ff0ec771db30,
-        type: 3}
-      propertyPath: solutionRenderer
-      value: 
-      objectReference: {fileID: 1876892059}
-    - target: {fileID: 7451304922045897168, guid: 71d9984eaa135f44fbc6ff0ec771db30,
-        type: 3}
-      propertyPath: solutionViewer
-      value: 
-      objectReference: {fileID: 1876892058}
     - target: {fileID: 7451304922045897169, guid: 71d9984eaa135f44fbc6ff0ec771db30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1086,6 +1161,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7451304922045897168, guid: 71d9984eaa135f44fbc6ff0ec771db30,
+        type: 3}
+      propertyPath: solutionRenderer
+      value: 
+      objectReference: {fileID: 1876892059}
+    - target: {fileID: 7451304922045897168, guid: 71d9984eaa135f44fbc6ff0ec771db30,
+        type: 3}
+      propertyPath: solutionViewer
+      value: 
+      objectReference: {fileID: 1876892058}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71d9984eaa135f44fbc6ff0ec771db30, type: 3}
 --- !u!1001 &8706152638479031173
