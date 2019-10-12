@@ -29,6 +29,7 @@ namespace Assets.Scripts.Sandbox
         [SerializeField] private float tphaseMoving;
 
         [SerializeField] private float samplingRate;
+        [SerializeField] private int tSamplesDiff;
 
         void Start()
         {
@@ -52,8 +53,8 @@ namespace Assets.Scripts.Sandbox
                 }
             }
             
-            var referenceDataFactory = new MockDataFactory(this, tphaseReference);
-            var movingDataFactory = new MockDataFactory(this, tphaseMoving);
+            var referenceDataFactory = new MockDataFactory(this, tphaseReference, 0);
+            var movingDataFactory = new MockDataFactory(this, tphaseMoving, tSamplesDiff);
 
             DrawLinesByPointFactory(referenceDataFactory, Color.blue);
             DrawLinesByPointFactory(movingDataFactory, Color.red);
@@ -69,12 +70,12 @@ namespace Assets.Scripts.Sandbox
             private IEnumerator<Vector3> dataPointsGenerator;
             private Test test;
 
-            public MockDataFactory(Test te, float phase)
+            public MockDataFactory(Test te, float phase, int tSamplesDiff)
             {
                 test = te;
                 t = 0;
                 //dataPointsGenerator = parabolaPointsGenerator();
-                dataPointsGenerator = SpiralPointsGenerator(phase);
+                dataPointsGenerator = SpiralPointsGenerator(phase, tSamplesDiff);
             }
 
             public IEnumerator<Vector3> parabolaPointsGenerator()
@@ -91,16 +92,17 @@ namespace Assets.Scripts.Sandbox
                 }
             }
 
-            public IEnumerator<Vector3> SpiralPointsGenerator(float phase)
+            public IEnumerator<Vector3> SpiralPointsGenerator(float phase, int tSamplesDiff)
             {
                 while (true)
                 {
                     // x = a cos(bt)+x0
                     // y = b sin(dt)+y0
                     // z = gt+z0
-                    var x = test.x0 + test.acosx * Mathf.Cos(test.samplingRate * Mathf.PI * t + phase);
-                    var y = test.y0 + test.bsiny * Mathf.Sin(test.samplingRate * Mathf.PI * t + phase);
-                    var z = test.z0 + test.hz * t;
+                    int effectiveT = t + tSamplesDiff;
+                    var x = test.x0 + test.acosx * Mathf.Cos(test.samplingRate * Mathf.PI * 2 * effectiveT + phase);
+                    var y = test.y0 + test.bsiny * Mathf.Sin(test.samplingRate * Mathf.PI * 2 * effectiveT + phase);
+                    var z = test.z0 + test.hz * effectiveT;
                     yield return new Vector3(x, y, z);
                     t++;
                 }

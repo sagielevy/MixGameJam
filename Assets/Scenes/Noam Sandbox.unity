@@ -254,7 +254,9 @@ MonoBehaviour:
   acosx: 1
   bsiny: 1
   hz: 0.1
-  samplingRate: 0.06
+  tphaseReference: 0
+  tphaseMoving: 0
+  samplingRate: 0.05
 --- !u!4 &2008850131
 Transform:
   m_ObjectHideFlags: 0
