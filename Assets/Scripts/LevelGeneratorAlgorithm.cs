@@ -10,11 +10,12 @@ namespace Assets.Scripts
     {
         LevelConfiguration ILevelGenerator.GenerateLevel(int minItemCount, int maxItemCount,
             float worldRadius, float minRotationSpeed, float maxRotationSpeed, float minScale,
-            float maxScale)
+            float maxScale, float sphereRadius)
         {
             int objsAmount = Random.Range(minItemCount, maxItemCount);
             var levelObjects = new Dictionary<int, Item>();
-            GenerateGameObjectsConfig(worldRadius, minRotationSpeed, maxRotationSpeed, minScale, maxScale, objsAmount, levelObjects);
+            GenerateGameObjectsConfig(worldRadius, minRotationSpeed, maxRotationSpeed, 
+                minScale, maxScale, objsAmount, levelObjects, sphereRadius);
             
             int solultionObjId;
             Vector3 solutionPosition;
@@ -39,7 +40,8 @@ namespace Assets.Scripts
             solutionPosition = new Vector3(xVal, yVal, zVal);
         }
 
-        private void GenerateGameObjectsConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, float minScale, float maxScale, int objsAmount, Dictionary<int, Item> levelObjects)
+        private void GenerateGameObjectsConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, 
+            float minScale, float maxScale, int objsAmount, Dictionary<int, Item> levelObjects, float sphereRadius)
         {
             for (int id = 1; id <= objsAmount; ++id)
             {
@@ -62,7 +64,7 @@ namespace Assets.Scripts
                 }
                 else
                 {
-                    obj.startingPosition = new Vector3((obj.scale + obj.parent.scale) / 2.0f, 0, 0);
+                    obj.startingPosition = new Vector3((obj.scale + obj.parent.scale) * sphereRadius, 0, 0);
                 }
                 obj.rotateDirection = generateRandVec3(worldRadius);
                 levelObjects.Add(id, obj);

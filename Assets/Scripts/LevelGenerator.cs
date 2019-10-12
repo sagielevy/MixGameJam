@@ -24,6 +24,7 @@ namespace Assets.Scripts
         private ILevelGenerator algorithm;
         private List<ArrowHintRotator> rotators;
         private List<ItemAnimator> items;
+        private float sphereRadius;
 
         List<Color> colors;
 
@@ -33,12 +34,13 @@ namespace Assets.Scripts
             rotators = new List<ArrowHintRotator>();
             items = new List<ItemAnimator>();
             colors = new List<Color> { Color.red, Color.green, Color.blue, Color.yellow, Color.white, Color.magenta };
+            sphereRadius = spherePrefab.GetComponent<SphereCollider>().radius;
         }
 
         public void GenerateNewLevel()
         {
             var levelConfig = algorithm.GenerateLevel(minItemCount, maxItemCount, worldRadius,
-                minRotationSpeed, maxRotationSpeed, minScale, maxScale);
+                minRotationSpeed, maxRotationSpeed, minScale, maxScale, sphereRadius);
             configurationReference.SetLevelConfiguration(levelConfig);
         }
 
@@ -73,7 +75,7 @@ namespace Assets.Scripts
             {
                 var newItemObject = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
                 items.Add(newItemObject);
-                newItemObject.transform.localScale = new Vector3(item.scale, item.scale, item.scale);
+                
                 Transform parent = null;
                 
                 if (item.parent != null)
@@ -86,6 +88,7 @@ namespace Assets.Scripts
                 }
 
                 newItemObject.transform.parent = parent;
+                newItemObject.transform.localScale = Vector3.one * item.scale;
                 newItemObject.transform.localPosition = item.startingPosition;
 
                 var arrowsHint = Instantiate(arrowsPrefab, Vector3.zero, Quaternion.identity);

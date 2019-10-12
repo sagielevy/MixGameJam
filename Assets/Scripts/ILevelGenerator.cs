@@ -10,6 +10,7 @@ namespace Assets.Scripts
                                          float minRotationSpeed,
                                          float maxRotationSpeed,
                                          float minScale,
-                                         float maxScale);
+                                         float maxScale,
+                                         float sphereRadius);
     }
 }
