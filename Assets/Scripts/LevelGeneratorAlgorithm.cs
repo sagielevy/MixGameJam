@@ -17,27 +17,15 @@ namespace Assets.Scripts
             GenerateGameObjectsConfig(worldRadius, minRotationSpeed, maxRotationSpeed, 
                 minScale, maxScale, objsAmount, levelObjects, sphereRadius);
             
-            int solultionObjId;
-            Vector3 solutionPosition;
-            GenerateSolutionConfig(objsAmount, levelObjects, out solultionObjId, out solutionPosition);
+            
+            int solultionObjId = Random.Range(1, objsAmount + 1);
+            var solutionPosition = generateRandVec3(worldRadius).normalized * sphereRadius;
 
             LevelConfiguration levelConfig = new LevelConfiguration();
             levelConfig.items = levelObjects.Values.ToArray();
             levelConfig.solutionItemId = solultionObjId;
-            levelConfig.solutionStartPosition = solutionPosition;
+            levelConfig.solutionStartPositionOnItem = solutionPosition;
             return levelConfig;
-        }
-
-        private static void GenerateSolutionConfig(int objsAmount, Dictionary<int, Item> levelObjects, out int solultionObjId, out Vector3 solutionPosition)
-        {
-            solultionObjId = Random.Range(1, objsAmount + 1);
-            float theta = Random.Range(0.0f, 180.0f);
-            float phi = Random.Range(0.0f, 360.0f);
-            float radius = levelObjects[solultionObjId].scale / 2;
-            float xVal = radius * Mathf.Sin(theta) * Mathf.Cos(phi);
-            float yVal = radius * Mathf.Sin(theta) * Mathf.Sin(phi);
-            float zVal = radius * Mathf.Cos(theta);
-            solutionPosition = new Vector3(xVal, yVal, zVal);
         }
 
         private void GenerateGameObjectsConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, 
@@ -45,30 +33,51 @@ namespace Assets.Scripts
         {
             for (int id = 1; id <= objsAmount; ++id)
             {
-                Item obj = new Item();
-                obj.id = id;
+                Item currItem = new Item();
+                currItem.id = id;
                 int parentId = Random.Range(0, id);
+
                 if (parentId == 0)
                 {
-                    obj.parent = null;
+                    currItem.parent = null;
                 }
                 else
                 {
-                    obj.parent = levelObjects[parentId];
+                    currItem.parent = levelObjects[parentId];
                 }
-                obj.scale = Random.Range(minScale, maxScale);
-                obj.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
-                if (obj.parent == null)
+
+                currItem.scale = Random.Range(minScale, maxScale);
+                currItem.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
+
+                if (currItem.parent == null)
                 {
-                    obj.startingPosition = generateRandVec3(worldRadius);
+                    currItem.startingPosition = generateRandVec3(worldRadius);
+                    currItem.aggregatedScale = currItem.scale;
                 }
                 else
                 {
-                    obj.startingPosition = new Vector3((obj.scale + obj.parent.scale) * sphereRadius, 0, 0);
+                    // Some big equation results in this
+                    var normalizedDirection = generateRandVec3(worldRadius).normalized;
+                    currItem.startingPosition = normalizedDirection * (currItem.scale + 1) * sphereRadius;
+                    currItem.aggregatedScale = CalcAggregatedScale(currItem);
                 }
-                obj.rotateDirection = generateRandVec3(worldRadius);
-                levelObjects.Add(id, obj);
+                currItem.rotateDirection = generateRandVec3(worldRadius);
+                levelObjects.Add(id, currItem);
             }
+        }
+
+        private float CalcAggregatedScale(Item item)
+        {
+            var scale = item.scale;
+            var currParent = item.parent;
+
+            while (currParent != null)
+            {
+                scale *= currParent.scale;
+                currParent = currParent.parent;
+            }
+
+            return scale;
         }
 
         private Item GenerateWorldConfig(float worldRadius, float minRotationSpeed, float maxRotationSpeed, Dictionary<int, Item> levelObjects)

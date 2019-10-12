@@ -8,7 +8,7 @@ namespace Assets.Scripts
 {
     class TrailValidatorMock : ITrailValidator
     {
-        public bool Validate(ITrail expected, ITrail actual)
+        public bool Validate(ITrail expected, ITrail actual, float threshold)
         {
             return true;
         }

@@ -8,6 +8,6 @@ namespace Assets.Scripts
 {
     public interface ITrailValidator
     {
-        bool Validate(ITrail expected, ITrail actual);
+        bool Validate(ITrail expected, ITrail actual, float threshold);
     }
 }

@@ -10,12 +10,8 @@ namespace Assets.Scripts
     class TrailValidatorMax : ITrailValidator
     {
         private float threshold = Mathf.Infinity;
-        public TrailValidatorMax(float threshold)
-        {
-            this.threshold = threshold;
-        }
 
-        public bool Validate(ITrail expected, ITrail actual)
+        public bool Validate(ITrail expected, ITrail actual, float threshold)
         {
             var expectedSamples = expected.GetSampledLocations();
             var actualSamples = actual.GetSampledLocations();

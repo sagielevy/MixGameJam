@@ -43,7 +43,7 @@ namespace Assets.Scripts.Sandbox
 
         void Update()
         {
-            validator = new TrailValidatorMSE(allowedError);
+            validator = new TrailValidatorMSE();
             void DrawLine(Vector3 start, Vector3 end, Color color)
             {
                 //Debug.LogFormat($"start: {start}, end: {end}");
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Sandbox
 
         private void ValidateCurves(ITrail referenceSamples, ITrail movingSamples)
         {
-            if (validator.Validate(referenceSamples, movingSamples))
+            if (validator.Validate(referenceSamples, movingSamples, allowedError))
             {
                 Debug.LogFormat("Curves are close enough");
             }

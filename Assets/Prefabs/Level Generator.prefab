@@ -43,13 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef027d103b40e644cbda133d2942fcc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minItemCount: 1
+  minItemCount: 2
   maxItemCount: 5
   worldRadius: 6
   minRotationSpeed: 50
   maxRotationSpeed: 200
   minScale: 1
-  maxScale: 3
+  maxScale: 2.2
   world: {fileID: 0}
   configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
     type: 2}
@@ -57,3 +57,4 @@ MonoBehaviour:
     type: 3}
   spherePrefab: {fileID: 6921333095384393277, guid: 7262456eab59d714e85c9d630dd0ecf7,
     type: 3}
+  colorGain: 1.35

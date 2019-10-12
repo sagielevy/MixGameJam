@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            validator = new TrailValidatorMSE(validatorThreshold);
+            validator = new TrailValidatorMSE();
             NewLevel();
         }
 
@@ -37,19 +37,19 @@ namespace Assets.Scripts
             var solutionBall = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),
                 item => item.GetId() == config.solutionItemId);
 
-            solutionTrailGenerator.transform.position = config.solutionStartPosition;
+            solutionTrailGenerator.transform.position = solutionBall.transform.position + config.solutionStartPositionOnItem;
             solutionTrailGenerator.StartSimulation(samples =>
             {
                 solutionTrail = samples;
                 levelGenerator.LoadGeneratedLevel();
                 loadingScreen.enabled = false;
                 levelPlayable.SetValue(true);
-            }, solutionBall.transform, config.solutionStartPosition);
+            }, solutionBall.transform, config.solutionStartPositionOnItem);
         }
 
         public void AttemptPlayerSolution(ITrail playerTrail)
         {
-            StartCoroutine(validator.Validate(solutionTrail, playerTrail)
+            StartCoroutine(validator.Validate(solutionTrail, playerTrail, validatorThreshold)
                 ? LoadNextLevelDelay()
                 : TryAgainDelay());
         }

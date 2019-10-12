@@ -7,7 +7,7 @@ namespace Assets.Scripts
     public struct LevelConfiguration
     {
         public Item[] items;
-        public Vector3 solutionStartPosition;
+        public Vector3 solutionStartPositionOnItem;
         public int solutionItemId;
     }
 
@@ -17,6 +17,7 @@ namespace Assets.Scripts
         public Vector3 startingPosition;
         public Vector3 rotateDirection;
         public float scale;
+        public float aggregatedScale;
         public float rotationSpeed;
         public int id;
         public Item parent;
