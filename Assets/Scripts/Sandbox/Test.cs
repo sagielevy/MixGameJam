@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts;
 
 namespace Assets.Scripts.Sandbox
 {
@@ -29,10 +30,13 @@ namespace Assets.Scripts.Sandbox
         [SerializeField] private float tphaseMoving;
 
         [SerializeField] private float samplingRate;
-        [SerializeField] private int tSamplesDiff;
+        [SerializeField] private float tSamplesDiff;
+
+        ITrailValidator validator;
 
         void Start()
         {
+            validator = new TrailValidatorMSE(0.1f);
         }
 
         void Update()
@@ -42,12 +46,23 @@ namespace Assets.Scripts.Sandbox
                 Debug.LogFormat($"start: {start}, end: {end}");
                 Debug.DrawLine(start, end, color, 0.1f);
             }
-            void DrawLinesByPointFactory(MockDataFactory factory, Color color)
+
+            ITrail SampleTrailFromPointFactory(MockDataFactory factory)
             {
-                Vector3 prev = new Vector3(0, 0, 0);
+                var samples = new List<Vector3>();
                 foreach (int index in Enumerable.Range(0, numberOfLines))
                 {
-                    var current = factory.YieldNewPoint();
+                    samples.Add(factory.YieldNewPoint());
+                }
+                return new SampledTrail(samples);
+            }
+
+            void DrawSampledTrails(ITrail trail, Color color)
+            {
+                Vector3 prev = new Vector3(0, 0, 0);
+                foreach (Vector3 v in trail.GetSampledLocations())
+                {
+                    var current = v;
                     DrawLine(prev, current, color);
                     prev = current;
                 }
@@ -56,12 +71,12 @@ namespace Assets.Scripts.Sandbox
             var referenceDataFactory = new MockDataFactory(this, tphaseReference, 0);
             var movingDataFactory = new MockDataFactory(this, tphaseMoving, tSamplesDiff);
 
-            DrawLinesByPointFactory(referenceDataFactory, Color.blue);
-            DrawLinesByPointFactory(movingDataFactory, Color.red);
+            var referenceSamples = SampleTrailFromPointFactory(referenceDataFactory);
+            var movingSamples = SampleTrailFromPointFactory(movingDataFactory);
 
-
+            DrawSampledTrails(referenceSamples, Color.blue);
+            DrawSampledTrails(movingSamples, Color.red);
         }
-
 
         private class MockDataFactory
         {
@@ -70,7 +85,7 @@ namespace Assets.Scripts.Sandbox
             private IEnumerator<Vector3> dataPointsGenerator;
             private Test test;
 
-            public MockDataFactory(Test te, float phase, int tSamplesDiff)
+            public MockDataFactory(Test te, float phase, float tSamplesDiff)
             {
                 test = te;
                 t = 0;
@@ -92,14 +107,14 @@ namespace Assets.Scripts.Sandbox
                 }
             }
 
-            public IEnumerator<Vector3> SpiralPointsGenerator(float phase, int tSamplesDiff)
+            public IEnumerator<Vector3> SpiralPointsGenerator(float phase, float tSamplesDiff)
             {
                 while (true)
                 {
                     // x = a cos(bt)+x0
                     // y = b sin(dt)+y0
                     // z = gt+z0
-                    int effectiveT = t + tSamplesDiff;
+                    float effectiveT = t + tSamplesDiff;
                     var x = test.x0 + test.acosx * Mathf.Cos(test.samplingRate * Mathf.PI * 2 * effectiveT + phase);
                     var y = test.y0 + test.bsiny * Mathf.Sin(test.samplingRate * Mathf.PI * 2 * effectiveT + phase);
                     var z = test.z0 + test.hz * effectiveT;
