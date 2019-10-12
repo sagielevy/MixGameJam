@@ -50,7 +50,7 @@ MonoBehaviour:
   maxRotationSpeed: 200
   minScale: 1
   maxScale: 1
-  world: {fileID: 3785806416878092443, guid: e613d2b3156f70b4ca4fa0cd4fbfb77f, type: 3}
+  world: {fileID: 0}
   configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
     type: 2}
   spherePrefab: {fileID: 6921333095384393277, guid: 7262456eab59d714e85c9d630dd0ecf7,

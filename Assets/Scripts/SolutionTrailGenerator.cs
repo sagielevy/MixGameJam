@@ -19,7 +19,7 @@ namespace Assets.Scripts
         private float realAnimateTime;
         private Action<ITrail> simulationComplete;
 
-        private void Start()
+        private void Awake()
         {
             samples = new List<Vector3>();
         }

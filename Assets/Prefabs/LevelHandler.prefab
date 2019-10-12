@@ -49,5 +49,4 @@ MonoBehaviour:
   levelGenerator: {fileID: 0}
   solutionTrailGenerator: {fileID: 0}
   validatorThreshold: 0.2
-  loadingScreen: {fileID: 3585523167114041885, guid: 96781205af87ea14a900734839ba0a37,
-    type: 3}
+  loadingScreen: {fileID: 0}

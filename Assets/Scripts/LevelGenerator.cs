@@ -19,7 +19,6 @@ namespace Assets.Scripts
 
         private ILevelGenerator algorithm;
         
-
         private void Awake()
         {
             algorithm = new LevelGeneratorAlgorithm();
@@ -39,13 +38,15 @@ namespace Assets.Scripts
         {
             foreach (var item in world.GetComponentsInChildren<ItemAnimator>())
             {
-                Destroy(item.gameObject);
+                if (item.gameObject != world)
+                {
+                    Destroy(item.gameObject);
+                }
             }
         }
 
         private void CreateItems()
         {
-            
             foreach (var item in configurationReference.GetLevelConfiguration().items)
             {
                 var newItemObject = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
@@ -53,10 +54,10 @@ namespace Assets.Scripts
                 newItemObject.transform.localScale = new Vector3(item.scale, item.scale, item.scale);
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection);
 
-                GameObject parent = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),
+                var parent = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),
                                                 element => element.GetId() == item.parentId).gameObject;          
                 newItemObject.transform.parent = parent.transform;
-                newItemObject.transform.localPosition = item.startingPosition; ;
+                newItemObject.transform.localPosition = item.startingPosition;
             }
         }
     }
