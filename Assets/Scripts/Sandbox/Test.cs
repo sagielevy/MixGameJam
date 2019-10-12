@@ -38,11 +38,12 @@ namespace Assets.Scripts.Sandbox
 
         void Start()
         {
-            validator = new TrailValidatorMSE(allowedError);
+            
         }
 
         void Update()
         {
+            validator = new TrailValidatorMSE(allowedError);
             void DrawLine(Vector3 start, Vector3 end, Color color)
             {
                 //Debug.LogFormat($"start: {start}, end: {end}");
