@@ -54,7 +54,11 @@ namespace Assets.Scripts
         {
             foreach (var item in items) 
             {
-                Destroy(item.gameObject);
+                if (item != null)
+                {
+                    // Must destroy immediate so that these objects will not be referenced during this frame
+                    DestroyImmediate(item.gameObject);
+                }
             }
 
             foreach (var arrowHintRotator in rotators)
@@ -65,7 +69,6 @@ namespace Assets.Scripts
             rotators.Clear();
             items.Clear();
         }
-
 
         private void CreateItems()
         {
