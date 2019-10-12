@@ -17,14 +17,16 @@ namespace Assets.Scripts
         [SerializeField] private ItemAnimator world;
         [SerializeField] private LevelConfigurationReference configurationReference;
 
-        // TODO add more prefabs if more prototype items
+        [SerializeField] private ArrowHintRotator arrowsPrefab;
         [SerializeField] private ItemAnimator spherePrefab;
 
         private ILevelGenerator algorithm;
-        
+        private List<ArrowHintRotator> rotators;
+
         private void Awake()
         {
             algorithm = new LevelGeneratorAlgorithm();
+            rotators = new List<ArrowHintRotator>();
         }
 
         public void GenerateNewLevel()
@@ -38,7 +40,7 @@ namespace Assets.Scripts
         {
             var worldItemData = Array.Find(configurationReference.GetLevelConfiguration().items,
                                 item => item.id == worldId);
-            world.SetItemData(worldId, worldItemData.rotationSpeed, worldItemData.rotateDirection);
+            world.SetItemData(worldId, worldItemData.rotationSpeed, worldItemData.rotateDirection, null);
             DestroyCurrentItems();
             CreateItems();
         }
@@ -46,11 +48,19 @@ namespace Assets.Scripts
         private void DestroyCurrentItems()
         {
             foreach (var item in world.GetComponentsInChildren<ItemAnimator>()) 
-            {   if (item != world)
+            {
+                if (item != world)
                 {
                     Destroy(item.gameObject);
                 }
             }
+
+            foreach (var arrowHintRotator in rotators)
+            {
+                Destroy(arrowHintRotator.gameObject);
+            }
+
+            rotators.Clear();
         }
         
         // filth
@@ -62,29 +72,41 @@ namespace Assets.Scripts
             foreach (var item in configurationReference.GetLevelConfiguration().items)
             {
                 var newItemObject = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
-
                 newItemObject.transform.localScale = new Vector3(item.scale, item.scale, item.scale);
-                newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection);
 
                 var parent = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),element => element.GetId() == item.parent.id).gameObject;          
                 newItemObject.transform.parent = parent.transform;
                 newItemObject.transform.localPosition = item.startingPosition;
 
-                
-                if (parent == world.gameObject) 
-                {
-                    newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
-                    colorUsed++;
-                } 
-                else 
-                {
-                    newItemObject.GetComponent<MeshRenderer>().material.SetColor(
-                        "son_color",
-                        new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
-                        parent.GetComponent<MeshRenderer>().material.color.g,
-                        parent.GetComponent<MeshRenderer>().material.color.b));
 
+                ArrowHintRotator arrowsHint = null;
+
+                if (item.id != worldId)
+                {
+                    arrowsHint = Instantiate(arrowsPrefab, Vector3.zero, Quaternion.identity);
+                    arrowsHint.transform.position = newItemObject.transform.position;
+                    arrowsHint.transform.localRotation = newItemObject.transform.localRotation;
+                    arrowsHint.transform.localScale *= item.scale;
+                    arrowsHint.SetRotateDir(item.rotateDirection);
+                    rotators.Add(arrowsHint);
                 }
+
+                newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection, arrowsHint);
+
+                //if (parent == world.gameObject) 
+                //{
+                //    newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
+                //    colorUsed++;
+                //} 
+                //else 
+                //{
+                //    newItemObject.GetComponent<MeshRenderer>().material.SetColor(
+                //        "son_color",
+                //        new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
+                //        parent.GetComponent<MeshRenderer>().material.color.g,
+                //        parent.GetComponent<MeshRenderer>().material.color.b));
+
+                //}
             }
         }
     }

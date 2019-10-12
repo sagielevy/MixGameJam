@@ -54,5 +54,7 @@ MonoBehaviour:
   world: {fileID: 0}
   configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
     type: 2}
+  arrowsPrefab: {fileID: -6190817083839928499, guid: 01ecac44fa85d574999b089a37e1ef51,
+    type: 3}
   spherePrefab: {fileID: 6921333095384393277, guid: 7262456eab59d714e85c9d630dd0ecf7,
     type: 3}

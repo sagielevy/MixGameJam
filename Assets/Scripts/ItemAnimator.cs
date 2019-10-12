@@ -8,13 +8,17 @@ namespace Assets.Scripts
         [SerializeField] private float rotateSpeed = 1.5f;
         [SerializeField] private Vector3 rotationVector = Vector3.zero;
         [SerializeField] private BooleanReference animate;
+        [SerializeField] private BooleanReference levelClickable;
         [SerializeField] private int Id;
 
-        public void SetItemData(int id, float rotateSpeed, Vector3 rotationVector)
+        private ArrowHintRotator arrowsHint;
+
+        public void SetItemData(int id, float rotateSpeed, Vector3 rotationVector, ArrowHintRotator arrowsHint)
         {
             Id = id;
             this.rotateSpeed = rotateSpeed;
             this.rotationVector = rotationVector.normalized;
+            this.arrowsHint = arrowsHint;
         }
 
         public int GetId()
@@ -24,6 +28,11 @@ namespace Assets.Scripts
 
         void FixedUpdate()
         {
+            if (arrowsHint != null)
+            {
+                arrowsHint.gameObject.SetActive(!animate.GetValue() && levelClickable.GetValue());
+            }
+
             if (animate.GetValue())
             {
                 transform.rotation *=

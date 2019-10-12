@@ -437,7 +437,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085228712}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -645,6 +645,11 @@ PrefabInstance:
       propertyPath: world
       value: 
       objectReference: {fileID: 828434472}
+    - target: {fileID: 2255518715720965024, guid: 1fb83482b17e58a4d98f40f2b8891980,
+        type: 3}
+      propertyPath: maxItemCount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fb83482b17e58a4d98f40f2b8891980, type: 3}
 --- !u!1001 &3585523165970182024
