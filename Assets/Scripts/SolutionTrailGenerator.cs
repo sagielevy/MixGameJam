@@ -12,37 +12,39 @@ namespace Assets.Scripts
         [SerializeField] private float simulationSpeed;
         [SerializeField] private LineRenderer solutionRenderer;
 
-        private List<Vector3> samples;
+        private int currSampleIndex;
+        private Vector3[] samples;
         private Action<ITrail> simulationComplete;
 
         private void Awake()
         {
-            samples = new List<Vector3>();
+            samples = new Vector3[samplesCount.GetValue()];
         }
 
         public void StartSimulation(Action<ITrail> simulationComplete)
         {
-            samples.Clear();
+            currSampleIndex = 0;
             solutionRenderer.SetPositions(new Vector3[]{});
             this.simulationComplete = simulationComplete;
             animate.SetValue(true);
             Time.timeScale = simulationSpeed;
         }
 
-        public List<Vector3> GetSampledLocations()
+        public IEnumerable<Vector3> GetSampledLocations()
         {
             return samples;
         }
 
         private void FixedUpdate()
         {
-            if (samples.Count >= samplesCount.GetValue())
+            if (currSampleIndex == samples.Length)
             {
                 StopSimulation();
                 return;
             }
 
-            samples.Add(transform.position);
+            samples[currSampleIndex] = transform.position;
+            currSampleIndex++;
         }
 
         private void StopSimulation()
@@ -53,14 +55,9 @@ namespace Assets.Scripts
             Time.timeScale = 1;
             simulationComplete(this);
             simulationComplete = null;
-
-            Debug.Log($"Real sampled {samples.Count}, samples:");
-            foreach (var sampledLocation in samples)
-            {
-                Debug.Log(sampledLocation);
-            }
-
-            solutionRenderer.SetPositions(samples.ToArray());
+            
+            solutionRenderer.positionCount = samples.Length;
+            solutionRenderer.SetPositions(samples);
         }
     }
 }

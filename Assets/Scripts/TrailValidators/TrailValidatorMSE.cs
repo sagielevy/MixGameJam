@@ -17,8 +17,8 @@ namespace Assets.Scripts
 
         public bool Validate(ITrail expected, ITrail actual)
         {
-            List<Vector3> expectedSamples = expected.GetSampledLocations();
-            List<Vector3> actualSamples = actual.GetSampledLocations();
+            var expectedSamples = expected.GetSampledLocations();
+            var actualSamples = actual.GetSampledLocations();
 
             var diff = expectedSamples.Zip(actualSamples, (e, a) => e-a);
             var normDiff = diff.Select(d => d.magnitude);

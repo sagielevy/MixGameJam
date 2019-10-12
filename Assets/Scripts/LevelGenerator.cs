@@ -34,9 +34,9 @@ namespace Assets.Scripts
 
         public void LoadGeneratedLevel()
         {
-            var worldItemData = Array.Find(configurationReference.GetLevelConfiguration().items,
-                item => item.id == worldId);
-            world.SetItemData(worldId, worldItemData.rotationSpeed, worldItemData.rotateDirection);
+            //var worldItemData = Array.Find(configurationReference.GetLevelConfiguration().items,
+            //    item => item.id == worldId);
+            //world.SetItemData(worldId, worldItemData.rotationSpeed, worldItemData.rotateDirection);
             DestroyCurrentItems();
             CreateItems();
         }

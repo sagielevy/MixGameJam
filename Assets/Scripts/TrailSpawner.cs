@@ -1,38 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.SharedData;
 using UnityEngine;
 
 namespace Assets.Scripts
 { 
-    [RequireComponent(typeof(TrailRenderer))]
+    [RequireComponent(typeof(LineRenderer))]
     public class TrailSpawner : MonoBehaviour, ITrail
     {
         [SerializeField] private BooleanReference animate;
         [SerializeField] private IntReference samplesCount;
 
-        private TrailRenderer trailRenderer;
-        private List<Vector3> samples;
+        private LineRenderer lineRenderer;
+        private Vector3[] samples;
+        private int currSampleIndex;
 
         private void Start()
         {
-            samples = new List<Vector3>();
-            trailRenderer = GetComponent<TrailRenderer>();
+            samples = new Vector3[samplesCount.GetValue()];
+            lineRenderer = GetComponent<LineRenderer>();
+            currSampleIndex = 0;
         }
 
-        public List<Vector3> GetSampledLocations()
+        public IEnumerable<Vector3> GetSampledLocations()
         {
             return samples;
         }
 
         private void FixedUpdate()
         {
-            if (samples.Count >= samplesCount.GetValue())
+            if (currSampleIndex == samples.Length)
             {
                 animate.SetValue(false);
                 return;
             }
 
-            samples.Add(transform.position);
+            lineRenderer.positionCount = currSampleIndex;
+            samples[currSampleIndex] = transform.position;
+            lineRenderer.SetPositions(samples);
+            currSampleIndex++;
         }
     }
 }
