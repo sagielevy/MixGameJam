@@ -8,6 +8,7 @@ namespace Assets.Scripts
     {
         public Item[] items;
         public Vector3 solutionStartPosition;
+        public int solutionItemId;
     }
 
     [Serializable]

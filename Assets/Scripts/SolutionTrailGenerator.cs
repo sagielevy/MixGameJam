@@ -21,13 +21,16 @@ namespace Assets.Scripts
             samples = new Vector3[samplesCount.GetValue()];
         }
 
-        public void StartSimulation(Action<ITrail> simulationComplete)
+        public void StartSimulation(Action<ITrail> simulationComplete, Transform parent,
+            Vector3 solutionStartPosition)
         {
-            currSampleIndex = 0;
+            transform.parent = parent;
+            transform.localPosition = solutionStartPosition;
             solutionRenderer.SetPositions(new Vector3[]{});
             this.simulationComplete = simulationComplete;
             animate.SetValue(true);
             Time.timeScale = simulationSpeed;
+            currSampleIndex = 0;
         }
 
         public IEnumerable<Vector3> GetSampledLocations()
@@ -53,6 +56,7 @@ namespace Assets.Scripts
 
             animate.SetValue(false);
             Time.timeScale = 1;
+            transform.parent = null;
             simulationComplete(this);
             simulationComplete = null;
             

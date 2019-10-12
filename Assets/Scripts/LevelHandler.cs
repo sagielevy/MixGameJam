@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.SharedData;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace Assets.Scripts
         [SerializeField] private SolutionTrailGenerator solutionTrailGenerator;
         [SerializeField] private float validatorThreshold = 0.2f;
         [SerializeField] private Image loadingScreen;
+        [SerializeField] private ItemAnimator world;
 
         private ITrailValidator validator;
         private ITrail solutionTrail;
@@ -29,17 +31,19 @@ namespace Assets.Scripts
             levelPlayable.SetValue(false);
             levelGenerator.GenerateNewLevel();
             levelGenerator.LoadGeneratedLevel();
+            
+            var config = levelConfigurationReference.GetLevelConfiguration();
+            var solutionBall = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),
+                item => item.GetId() == config.solutionItemId);
 
-            solutionTrailGenerator.transform.parent = GameObject.Find("World").transform;
-            solutionTrailGenerator.transform.position = levelConfigurationReference
-                .GetLevelConfiguration().solutionStartPosition;
+            solutionTrailGenerator.transform.position = config.solutionStartPosition;
             solutionTrailGenerator.StartSimulation(samples =>
             {
                 solutionTrail = samples;
                 levelGenerator.LoadGeneratedLevel();
                 loadingScreen.enabled = false;
                 levelPlayable.SetValue(true);
-            });
+            }, solutionBall.transform, config.solutionStartPosition);
         }
 
         public void AttemptPlayerSolution(ITrail playerTrail)

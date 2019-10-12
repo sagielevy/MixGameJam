@@ -916,6 +916,11 @@ PrefabInstance:
       propertyPath: loadingScreen
       value: 
       objectReference: {fileID: 1146238357}
+    - target: {fileID: 1111716862723274804, guid: f45cbb35d79f050469361d069bc02062,
+        type: 3}
+      propertyPath: world
+      value: 
+      objectReference: {fileID: 828434472}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f45cbb35d79f050469361d069bc02062, type: 3}
 --- !u!114 &4170236256212709175 stripped
