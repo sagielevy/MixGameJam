@@ -6,13 +6,13 @@ namespace Assets.Scripts
 {
     public class LevelGenerator : MonoBehaviour
     {
-        [SerializeField] private int minItemCount = 2;
-        [SerializeField] private int maxItemCount = 2;
-        [SerializeField] private float worldRadius = 10;
-        [SerializeField] private float minRotationSpeed = 50;
-        [SerializeField] private float maxRotationSpeed = 200;
-        [SerializeField] private float minScale = 1;
-        [SerializeField] private float maxScale = 1;
+        [SerializeField] private int minItemCount;
+        [SerializeField] private int maxItemCount;
+        [SerializeField] private float worldRadius;
+        [SerializeField] private float minRotationSpeed;
+        [SerializeField] private float maxRotationSpeed;
+        [SerializeField] private float minScale;
+        [SerializeField] private float maxScale;
         [SerializeField] private int worldId;
         [SerializeField] private ItemAnimator world;
         [SerializeField] private LevelConfigurationReference configurationReference;
@@ -29,25 +29,24 @@ namespace Assets.Scripts
 
         public void GenerateNewLevel()
         {
-            var output = algorithm.GenerateLevel(minItemCount, maxItemCount, worldRadius,
+            var levelConfig = algorithm.GenerateLevel(minItemCount, maxItemCount, worldRadius,
                 minRotationSpeed, maxRotationSpeed, minScale, maxScale);
-            configurationReference.SetLevelConfiguration(output);
+            configurationReference.SetLevelConfiguration(levelConfig);
         }
 
         public void LoadGeneratedLevel()
         {
-            //var worldItemData = Array.Find(configurationReference.GetLevelConfiguration().items,
-            //    item => item.id == worldId);
-            //world.SetItemData(worldId, worldItemData.rotationSpeed, worldItemData.rotateDirection);
+            var worldItemData = Array.Find(configurationReference.GetLevelConfiguration().items,
+                                item => item.id == worldId);
+            world.SetItemData(worldId, worldItemData.rotationSpeed, worldItemData.rotateDirection);
             DestroyCurrentItems();
             CreateItems();
         }
 
         private void DestroyCurrentItems()
         {
-            foreach (var item in world.GetComponentsInChildren<ItemAnimator>())
-            {
-                if (item != world)
+            foreach (var item in world.GetComponentsInChildren<ItemAnimator>()) 
+            {   if (item != world)
                 {
                     Destroy(item.gameObject);
                 }
@@ -67,22 +66,23 @@ namespace Assets.Scripts
                 newItemObject.transform.localScale = new Vector3(item.scale, item.scale, item.scale);
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection);
 
-                var parent = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),
-                                                element => element.GetId() == item.parentId).gameObject;          
+                var parent = Array.Find(world.GetComponentsInChildren<ItemAnimator>(),element => element.GetId() == item.parent.id).gameObject;          
                 newItemObject.transform.parent = parent.transform;
                 newItemObject.transform.localPosition = item.startingPosition;
 
                 
-                if (parent == world.gameObject) {
+                if (parent == world.gameObject) 
+                {
                     newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
                     colorUsed++;
-                } else {
+                } 
+                else 
+                {
                     newItemObject.GetComponent<MeshRenderer>().material.SetColor(
                         "son_color",
                         new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
                         parent.GetComponent<MeshRenderer>().material.color.g,
-                        parent.GetComponent<MeshRenderer>().material.color.b
-  ));
+                        parent.GetComponent<MeshRenderer>().material.color.b));
 
                 }
             }

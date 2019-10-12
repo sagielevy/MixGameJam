@@ -12,14 +12,14 @@ namespace Assets.Scripts
     }
 
     [Serializable]
-    public struct Item
+    public class Item
     {
         public Vector3 startingPosition;
         public Vector3 rotateDirection;
         public float scale;
         public float rotationSpeed;
         public int id;
-        public int parentId;
+        public Item parent;
     }
 
     // TODO add game event of type LevelConfigurationReference

@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -12,42 +14,55 @@ namespace Assets.Scripts
         {
             int objsAmount = Random.Range(minItemCount, maxItemCount);
             
-            Item[] levelObjects = new Item[objsAmount];
+            var levelObjects = new Dictionary<int, Item>();
+            
+            // Create World Object
+            var worldConfig = new Item();
+            worldConfig.id = 0;
+            worldConfig.parent = worldConfig;
+            worldConfig.rotateDirection = generateRandVec3(worldRadius);
+            worldConfig.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
+            levelObjects.Add(worldConfig.id, worldConfig);
 
-            for (int i = 0; i < objsAmount; i++)
+            int id = 1;
+            while (id <= objsAmount)
             {
                 Item obj = new Item();
-                obj.id = i;
-                obj.parentId = Random.Range(0, i);
+                obj.id = id;
+                obj.parent = levelObjects[Random.Range(0, id)];
                 obj.scale = Random.Range(minScale, maxScale);
                 obj.rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
-
-                if (obj.parentId == 0)
+                if (obj.parent == worldConfig)
                 {
-                    obj.startingPosition = new Vector3(Random.Range(0, worldRadius),
-                        Random.Range(0, worldRadius), Random.Range(0, worldRadius));
-                } else{
-                    obj.startingPosition = new Vector3((obj.scale + levelObjects[obj.parentId].scale) / 2, 0, 0);
+                    obj.startingPosition = generateRandVec3(worldRadius);
                 }
-                obj.rotateDirection = new Vector3(Random.Range(0, worldRadius),
-                    Random.Range(0, worldRadius), Random.Range(0, worldRadius));
-                levelObjects[i] = obj;
+                else
+                {
+                    obj.startingPosition = new Vector3((obj.scale + obj.parent.scale) / 2, 0, 0);
+                }
+                obj.rotateDirection = generateRandVec3(worldRadius);
+                levelObjects.Add(id++, obj);
             }
 
-            int solultionObj = Random.Range(0, objsAmount);
+            int solultionObjId = Random.Range(1, objsAmount+1);
             float theta = Random.Range(0.0f, 180.0f);
             float phi = Random.Range(0.0f, 360.0f);
-            float radius = levelObjects[solultionObj].scale / 2;
+            float radius = levelObjects[solultionObjId].scale / 2;
             float xVal = radius * Mathf.Sin(theta) * Mathf.Cos(phi);
             float yVal = radius * Mathf.Sin(theta) * Mathf.Sin(phi);
             float zVal = radius * Mathf.Cos(theta);
             Vector3 solutionPosition = new Vector3(xVal,yVal,zVal);
             
             LevelConfiguration levelConfig = new LevelConfiguration();
-            levelConfig.items = levelObjects;
-            levelConfig.solutionItemId = solultionObj;
+            levelConfig.items = levelObjects.Values.ToArray();
+            levelConfig.solutionItemId = solultionObjId;
             levelConfig.solutionStartPosition = solutionPosition;
             return levelConfig;
+        }
+        private Vector3 generateRandVec3(float worldRadius)
+        {
+            return new Vector3(Random.Range(0, worldRadius),
+                Random.Range(0, worldRadius), Random.Range(0, worldRadius));
         }
     }
 }
