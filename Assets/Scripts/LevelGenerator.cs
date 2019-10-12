@@ -45,7 +45,7 @@ namespace Assets.Scripts
         {
             foreach (var item in world.GetComponentsInChildren<ItemAnimator>())
             {
-                if (item.gameObject != world)
+                if (item != world)
                 {
                     Destroy(item.gameObject);
                 }
