@@ -11,7 +11,8 @@ namespace Assets.Scripts
         [SerializeField] private float maxRotationSpeed = 200;
         [SerializeField] private float minScale = 1;
         [SerializeField] private float maxScale = 1;
-        [SerializeField] private GameObject world;
+        [SerializeField] private int worldId;
+        [SerializeField] private ItemAnimator world;
         [SerializeField] private LevelConfigurationReference configurationReference;
 
         // TODO add more prefabs if more prototype items
@@ -24,12 +25,18 @@ namespace Assets.Scripts
             algorithm = new LevelGeneratorAlgorithm();
         }
 
-        public void GenerateLevel()
+        public void GenerateNewLevel()
         {
             var output = algorithm.GenerateLevel(minItemCount, maxItemCount, worldRadius,
                 minRotationSpeed, maxRotationSpeed, minScale, maxScale);
             configurationReference.SetLevelConfiguration(output);
+        }
 
+        public void LoadGeneratedLevel()
+        {
+            var worldItemData = Array.Find(configurationReference.GetLevelConfiguration().items,
+                item => item.id == worldId);
+            world.SetItemData(worldId, worldItemData.rotationSpeed, worldItemData.rotateDirection);
             DestroyCurrentItems();
             CreateItems();
         }

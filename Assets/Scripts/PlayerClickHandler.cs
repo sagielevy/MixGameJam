@@ -5,7 +5,6 @@ namespace Assets.Scripts
 {
     public class PlayerClickHandler : MonoBehaviour
     {
-        [SerializeField] private FloatReference animateTimeSeconds;
         [SerializeField] private LevelConfigurationReference configurationReference;
         [SerializeField] private BooleanReference animate;
         [SerializeField] private BooleanReference levelPlayable;
@@ -14,12 +13,20 @@ namespace Assets.Scripts
 
         private float clickStartTime;
         private TrailSpawner currSpawner;
+        private bool wasAnimating;
 
         private void FixedUpdate()
         {
-            if (animate.GetValue() && Time.unscaledTime - clickStartTime >= animateTimeSeconds.GetValue())
+            if (wasAnimating && !animate.GetValue())
             {
-                animate.SetValue(false);
+                wasAnimating = false;
+
+                Debug.Log($"Real sampled {currSpawner.GetSampledLocations().Count}, samples:");
+                foreach (var sampledLocation in currSpawner.GetSampledLocations())
+                {
+                    Debug.Log(sampledLocation);
+                }
+
                 levelHandler.AttemptPlayerSolution(currSpawner);
             }
 
@@ -57,8 +64,9 @@ namespace Assets.Scripts
         private void StartTrail(RaycastHit hit)
         {
             currSpawner = Instantiate(prefab, hit.point, Quaternion.identity, hit.transform);
-            clickStartTime = Time.unscaledTime;
+            clickStartTime = Time.fixedTime;
             animate.SetValue(true);
+            wasAnimating = true;
         }
     }
 }

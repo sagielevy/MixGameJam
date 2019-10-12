@@ -7,20 +7,16 @@ namespace Assets.Scripts
     [RequireComponent(typeof(TrailRenderer))]
     public class TrailSpawner : MonoBehaviour, ITrail
     {
-        [SerializeField] private FloatReference sampleIntervalTimeSeconds;
-        [SerializeField] private FloatReference animateTimeSeconds;
+        [SerializeField] private BooleanReference animate;
+        [SerializeField] private IntReference samplesCount;
 
         private TrailRenderer trailRenderer;
         private List<Vector3> samples;
-        private float startTime;
-        private float lastSampleTime;
 
         private void Start()
         {
             samples = new List<Vector3>();
             trailRenderer = GetComponent<TrailRenderer>();
-            trailRenderer.time = animateTimeSeconds.GetValue(); // TODO set more?
-            startTime = Time.unscaledTime;
         }
 
         public List<Vector3> GetSampledLocations()
@@ -30,16 +26,13 @@ namespace Assets.Scripts
 
         private void FixedUpdate()
         {
-            if (Time.unscaledTime - startTime >= animateTimeSeconds.GetValue())
+            if (samples.Count >= samplesCount.GetValue())
             {
+                animate.SetValue(false);
                 return;
             }
 
-            if (Time.unscaledTime - lastSampleTime >= sampleIntervalTimeSeconds.GetValue())
-            {
-                lastSampleTime = Time.unscaledTime;
-                samples.Add(transform.position);
-            }
+            samples.Add(transform.position);
         }
     }
 }

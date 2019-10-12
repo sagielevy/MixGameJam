@@ -27,13 +27,16 @@ namespace Assets.Scripts
         {
             loadingScreen.enabled = true;
             levelPlayable.SetValue(false);
-            levelGenerator.GenerateLevel();
+            levelGenerator.GenerateNewLevel();
+            levelGenerator.LoadGeneratedLevel();
 
+            solutionTrailGenerator.transform.parent = GameObject.Find("World").transform;
             solutionTrailGenerator.transform.position = levelConfigurationReference
                 .GetLevelConfiguration().solutionStartPosition;
             solutionTrailGenerator.StartSimulation(samples =>
             {
                 solutionTrail = samples;
+                levelGenerator.LoadGeneratedLevel();
                 loadingScreen.enabled = false;
                 levelPlayable.SetValue(true);
             });

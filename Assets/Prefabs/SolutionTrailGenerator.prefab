@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animate: {fileID: 11400000, guid: 9bae698b0f2a9aa42bb3039d68356606, type: 2}
-  sampleIntervalSeconds: {fileID: 11400000, guid: c17b8e38a0582f14cb02285f736e5f10,
-    type: 2}
-  animateTimeSeconds: {fileID: 11400000, guid: 5312a6a68bc4ae64f9a5347b2b35cb25, type: 2}
-  speedFactor: {fileID: 11400000, guid: c326a232338a3694fb4bff0bc93319f3, type: 2}
+  samplesCount: {fileID: 11400000, guid: f0b441ab85a6ba746bd8d17922dc62de, type: 2}
   simulationSpeed: 1000
+  solutionRenderer: {fileID: 0}

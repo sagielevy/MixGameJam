@@ -8,16 +8,11 @@ namespace Assets.Scripts
     public class SolutionTrailGenerator : MonoBehaviour, ITrail
     {
         [SerializeField] private BooleanReference animate;
-        [SerializeField] private FloatReference sampleIntervalSeconds;
-        [SerializeField] private FloatReference animateTimeSeconds;
-        [SerializeField] private FloatReference speedFactor;
+        [SerializeField] private IntReference samplesCount;
         [SerializeField] private float simulationSpeed;
+        [SerializeField] private LineRenderer solutionRenderer;
 
         private List<Vector3> samples;
-        private float startTime;
-        private float lastRealInterval;
-        private float realInterval;
-        private float realAnimateTime;
         private Action<ITrail> simulationComplete;
 
         private void Awake()
@@ -28,12 +23,10 @@ namespace Assets.Scripts
         public void StartSimulation(Action<ITrail> simulationComplete)
         {
             samples.Clear();
+            solutionRenderer.SetPositions(new Vector3[]{});
             this.simulationComplete = simulationComplete;
-            speedFactor.SetValue(simulationSpeed);
             animate.SetValue(true);
-            realInterval = sampleIntervalSeconds.GetValue() / speedFactor.GetValue();
-            realAnimateTime = animateTimeSeconds.GetValue() / speedFactor.GetValue();
-            startTime = Time.unscaledTime;
+            Time.timeScale = simulationSpeed;
         }
 
         public List<Vector3> GetSampledLocations()
@@ -43,17 +36,13 @@ namespace Assets.Scripts
 
         private void FixedUpdate()
         {
-            if (Time.unscaledTime - startTime >= realAnimateTime)
+            if (samples.Count >= samplesCount.GetValue())
             {
                 StopSimulation();
                 return;
             }
 
-            if (Time.unscaledTime - lastRealInterval >= realInterval)
-            {
-                lastRealInterval = Time.unscaledTime;
-                samples.Add(transform.position);
-            }
+            samples.Add(transform.position);
         }
 
         private void StopSimulation()
@@ -61,9 +50,17 @@ namespace Assets.Scripts
             if (simulationComplete == null) return;
 
             animate.SetValue(false);
-            speedFactor.SetValue(1);
+            Time.timeScale = 1;
             simulationComplete(this);
             simulationComplete = null;
+
+            Debug.Log($"Real sampled {samples.Count}, samples:");
+            foreach (var sampledLocation in samples)
+            {
+                Debug.Log(sampledLocation);
+            }
+
+            solutionRenderer.SetPositions(samples.ToArray());
         }
     }
 }
