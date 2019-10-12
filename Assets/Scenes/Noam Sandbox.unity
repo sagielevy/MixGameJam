@@ -241,23 +241,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfLines: 97
-  x0: 0
-  y0: 0
-  at: 0.01
-  bt: 0.01
-  z0: 0
-  dx: 0
-  ey: 0
-  fxy: 0
-  gxx: 1
-  hyy: 1
-  acosx: 1
-  bsiny: 1
-  hz: 0.1
-  tphaseReference: 0
+  x0Moving: 0
+  y0Moving: 0
+  z0Moving: 0
+  acosxMoving: 1
+  bsinyMoving: 1
+  hzMoving: 0.05
   tphaseMoving: 0
-  samplingRate: 0.05
-  tSamplesDiff: 1
+  samplingRateMoving: 0.05
+  samplingDiffMoving: 0
+  x0Reference: 0
+  y0Reference: 0
+  z0Reference: 0
+  acosxReference: 1
+  bsinyReference: 1
+  hzReference: 0.05
+  tphaseReference: 0
+  samplingRateReference: 0.05
+  samplingDiffReference: 0
   allowedError: 1
 --- !u!4 &2008850131
 Transform:

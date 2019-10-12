@@ -12,25 +12,25 @@ namespace Assets.Scripts.Sandbox
     {
         [SerializeField] private int numberOfLines;
 
-        [SerializeField] private float x0;
-        [SerializeField] private float y0;
-        [SerializeField] private float at;
-        [SerializeField] private float bt;
-        [SerializeField] private float z0;
-        [SerializeField] private float dx;
-        [SerializeField] private float ey;
-        [SerializeField] private float fxy;
-        [SerializeField] private float gxx;
-        [SerializeField] private float hyy;
-
-        [SerializeField] private float acosx;
-        [SerializeField] private float bsiny;
-        [SerializeField] private float hz;
-        [SerializeField] private float tphaseReference;
+        [SerializeField] private float x0Moving;
+        [SerializeField] private float y0Moving;
+        [SerializeField] private float z0Moving;
+        [SerializeField] private float acosxMoving;
+        [SerializeField] private float bsinyMoving;
+        [SerializeField] private float hzMoving;
         [SerializeField] private float tphaseMoving;
+        [SerializeField] private float samplingRateMoving;
+        [SerializeField] private float samplingDiffMoving;
 
-        [SerializeField] private float samplingRate;
-        [SerializeField] private float tSamplesDiff;
+        [SerializeField] private float x0Reference;
+        [SerializeField] private float y0Reference;
+        [SerializeField] private float z0Reference;
+        [SerializeField] private float acosxReference;
+        [SerializeField] private float bsinyReference;
+        [SerializeField] private float hzReference;
+        [SerializeField] private float tphaseReference;
+        [SerializeField] private float samplingRateReference;
+        [SerializeField] private float samplingDiffReference;
 
         [SerializeField] private float allowedError;
 
@@ -71,8 +71,8 @@ namespace Assets.Scripts.Sandbox
                 }
             }
             
-            var referenceDataFactory = new MockDataFactory(this, tphaseReference, 0);
-            var movingDataFactory = new MockDataFactory(this, tphaseMoving, tSamplesDiff);
+            var referenceDataFactory = new MockDataFactory(this, true);
+            var movingDataFactory = new MockDataFactory(this, false);
 
             var referenceSamples = SampleTrailFromPointFactory(referenceDataFactory);
             var movingSamples = SampleTrailFromPointFactory(movingDataFactory);
@@ -102,29 +102,21 @@ namespace Assets.Scripts.Sandbox
             private IEnumerator<Vector3> dataPointsGenerator;
             private Test test;
 
-            public MockDataFactory(Test te, float phase, float tSamplesDiff)
+            public MockDataFactory(Test te, bool isMoving)
             {
                 test = te;
                 t = 0;
                 //dataPointsGenerator = parabolaPointsGenerator();
-                dataPointsGenerator = SpiralPointsGenerator(phase, tSamplesDiff);
-            }
-
-            public IEnumerator<Vector3> parabolaPointsGenerator()
-            {
-                while (true)
-                {
-                    // x,y = a,b * t
-                    // z(t) = c + dx + ey + fxy + gxx + hyy
-                    var x = test.x0 + test.at * t;
-                    var y = test.y0 + test.bt * t;
-                    var z = test.z0 + test.dx * x + test.ey * y + test.fxy * x * y + test.gxx * x * x + test.hyy * y * y;
-                    yield return new Vector3(x, y, z);
-                    t++;
+                if (isMoving){
+                    dataPointsGenerator = SpiralPointsGenerator(te.tphaseMoving, te.samplingDiffMoving, te.samplingRateMoving, te.x0Moving, te.y0Moving, te.z0Moving, te.acosxMoving, te.bsinyMoving, te.hzMoving);
                 }
+                else {
+                    dataPointsGenerator = SpiralPointsGenerator(te.tphaseReference, te.samplingDiffReference, te.samplingRateReference, te.x0Reference, te.y0Reference, te.z0Reference, te.acosxReference, te.bsinyReference, te.hzReference);
+                }
+                
             }
-
-            public IEnumerator<Vector3> SpiralPointsGenerator(float phase, float tSamplesDiff)
+            
+            public IEnumerator<Vector3> SpiralPointsGenerator(float phase, float tSamplesDiff, float samplingRate, float x0, float y0, float z0, float acosx, float bsiny, float hz)
             {
                 while (true)
                 {
@@ -132,9 +124,9 @@ namespace Assets.Scripts.Sandbox
                     // y = b sin(dt)+y0
                     // z = gt+z0
                     float effectiveT = t + tSamplesDiff;
-                    var x = test.x0 + test.acosx * Mathf.Cos(test.samplingRate * Mathf.PI * 2 * effectiveT + phase);
-                    var y = test.y0 + test.bsiny * Mathf.Sin(test.samplingRate * Mathf.PI * 2 * effectiveT + phase);
-                    var z = test.z0 + test.hz * effectiveT;
+                    var x = x0 + acosx * Mathf.Cos(samplingRate * Mathf.PI * 2 * effectiveT + phase);
+                    var y = y0 + bsiny * Mathf.Sin(samplingRate * Mathf.PI * 2 * effectiveT + phase);
+                    var z = z0 + hz * effectiveT;
                     yield return new Vector3(x, y, z);
                     t++;
                 }
