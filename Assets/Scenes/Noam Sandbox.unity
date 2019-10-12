@@ -257,6 +257,8 @@ MonoBehaviour:
   tphaseReference: 0
   tphaseMoving: 0
   samplingRate: 0.05
+  tSamplesDiff: 100
+  allowedError: 0
 --- !u!4 &2008850131
 Transform:
   m_ObjectHideFlags: 0
