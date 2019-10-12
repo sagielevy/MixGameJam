@@ -88,10 +88,9 @@ namespace Assets.Scripts
                 newItemObject.transform.parent = parent;
                 newItemObject.transform.localPosition = item.startingPosition;
 
-                ArrowHintRotator arrowsHint = null;
-                arrowsHint = Instantiate(arrowsPrefab, Vector3.zero, Quaternion.identity);
+                var arrowsHint = Instantiate(arrowsPrefab, Vector3.zero, Quaternion.identity);
                 arrowsHint.transform.position = newItemObject.transform.position;
-                arrowsHint.transform.rotation = Quaternion.AngleAxis(90, item.rotateDirection);
+                arrowsHint.transform.rotation = Quaternion.LookRotation(Vector3.forward, item.rotateDirection);
                 arrowsHint.transform.localScale *= item.scale;
                 rotators.Add(arrowsHint);
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection, arrowsHint);
