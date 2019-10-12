@@ -15,6 +15,7 @@ namespace Assets.Scripts
         [SerializeField] private float validatorThreshold = 0.2f;
         [SerializeField] private Image loadingScreen;
         [SerializeField] private Transform world;
+        [SerializeField] private Text gameResult;
 
         private ITrailValidator validator;
         private ITrail solutionTrail;
@@ -56,7 +57,10 @@ namespace Assets.Scripts
         private IEnumerator<WaitForSeconds> TryAgainDelay()
         {
             levelPlayable.SetValue(false);
-            yield return new WaitForSeconds(3);
+            gameResult.text = "Try again...";
+            yield return new WaitForSeconds(3f);
+
+            gameResult.text = "";
             levelGenerator.LoadGeneratedLevel();
             levelPlayable.SetValue(true);
         }
@@ -64,8 +68,10 @@ namespace Assets.Scripts
         private IEnumerator<WaitForSeconds> LoadNextLevelDelay()
         {
             levelPlayable.SetValue(false);
-            yield return new WaitForSeconds(3);
+            gameResult.text = "Success!";
+            yield return new WaitForSeconds(3f);
 
+            gameResult.text = "";
             NewLevel();
         }
     }
