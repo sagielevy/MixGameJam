@@ -17,14 +17,15 @@ namespace Assets.Scripts
 
         public bool Validate(ITrail expected, ITrail actual)
         {
-            List<Vector3> expectedSamples = expected.GetSampledLocations();
-            List<Vector3> actualSamples = expected.GetSampledLocations();
+            var expectedSamples = expected.GetSampledLocations();
+            var actualSamples = actual.GetSampledLocations();
 
             var diff = expectedSamples.Zip(actualSamples, (e, a) => e-a);
             var normDiff = diff.Select(d => d.magnitude);
             var sumNormDiff = normDiff.Aggregate(0.0, (x, y) => x + y);
             var mse = sumNormDiff / diff.Count();
-            bool isValid = mse < threshold;
+            bool isValid = mse <= threshold;
+            Debug.Log($"mse: {mse}");
             return isValid;
         }
     }

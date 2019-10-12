@@ -240,6 +240,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 360d6b196598f3d4c8ec9172415df5cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfLines: 97
+  x0Moving: 0
+  y0Moving: 0
+  z0Moving: 0
+  acosxMoving: 1
+  bsinyMoving: 1
+  hzMoving: 0.05
+  tphaseMoving: 0
+  samplingRateMoving: 0.05
+  samplingDiffMoving: 0
+  x0Reference: 0
+  y0Reference: 0
+  z0Reference: 0
+  acosxReference: 1
+  bsinyReference: 1
+  hzReference: 0.05
+  tphaseReference: 0
+  samplingRateReference: 0.05
+  samplingDiffReference: 0
+  allowedError: 1
 --- !u!4 &2008850131
 Transform:
   m_ObjectHideFlags: 0

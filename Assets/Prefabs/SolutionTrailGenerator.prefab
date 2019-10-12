@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animate: {fileID: 11400000, guid: 9bae698b0f2a9aa42bb3039d68356606, type: 2}
   samplesCount: {fileID: 11400000, guid: f0b441ab85a6ba746bd8d17922dc62de, type: 2}
-  simulationSpeed: 1000
+  simulationSpeed: 100
   solutionRenderer: {fileID: 0}
