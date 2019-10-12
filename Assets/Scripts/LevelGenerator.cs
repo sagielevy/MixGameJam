@@ -15,18 +15,17 @@ namespace Assets.Scripts
         [SerializeField] private LevelConfigurationReference configurationReference;
 
         // TODO add more prefabs if more prototype items
-        [SerializeField] private ItemAnimator sphere;
+        [SerializeField] private ItemAnimator spherePrefab;
 
         private ILevelGenerator algorithm;
         
 
-        private void Start()
+        private void Awake()
         {
             algorithm = new LevelGeneratorAlgorithm();
-            GenerateLevel();
         }
 
-        private void GenerateLevel()
+        public void GenerateLevel()
         {
             var output = algorithm.GenerateLevel(minItemCount, maxItemCount, worldRadius,
                 minRotationSpeed, maxRotationSpeed, minScale, maxScale);
@@ -49,7 +48,7 @@ namespace Assets.Scripts
             
             foreach (var item in configurationReference.GetLevelConfiguration().items)
             {
-                var newItemObject = Instantiate(sphere, Vector3.zero, Quaternion.identity);
+                var newItemObject = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
 
                 newItemObject.transform.localScale = new Vector3(item.scale, item.scale, item.scale);
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection);

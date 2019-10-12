@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2255518715720965027
+--- !u!1 &4170236256311430507
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2255518715720965025}
-  - component: {fileID: 2255518715720965024}
+  - component: {fileID: 4170236256311430504}
+  - component: {fileID: 1111716862723274804}
   m_Layer: 0
-  m_Name: Level Generator
+  m_Name: LevelHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2255518715720965025
+--- !u!4 &4170236256311430504
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2255518715720965027}
+  m_GameObject: {fileID: 4170236256311430507}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.37497926, y: 1.1844419, z: -0.029024808}
+  m_LocalPosition: {x: 7.7418065, y: 2.1258955, z: -0.5683341}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2255518715720965024
+--- !u!114 &1111716862723274804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2255518715720965027}
+  m_GameObject: {fileID: 4170236256311430507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef027d103b40e644cbda133d2942fcc8, type: 3}
+  m_Script: {fileID: 11500000, guid: f990cd5c710a07d4fae6b8b3ad491b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minItemCount: 1
-  maxItemCount: 3
-  worldRadius: 10
-  minRotationSpeed: 50
-  maxRotationSpeed: 200
-  minScale: 1
-  maxScale: 1
-  world: {fileID: 3785806416878092443, guid: e613d2b3156f70b4ca4fa0cd4fbfb77f, type: 3}
-  configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
+  levelPlayable: {fileID: 11400000, guid: 5dc5d06b117463d40a3ecb37d3d82de0, type: 2}
+  levelConfigurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
     type: 2}
-  spherePrefab: {fileID: 6921333095384393277, guid: 7262456eab59d714e85c9d630dd0ecf7,
+  levelGenerator: {fileID: 0}
+  solutionTrailGenerator: {fileID: 0}
+  validatorThreshold: 0.2
+  loadingScreen: {fileID: 3585523167114041885, guid: 96781205af87ea14a900734839ba0a37,
     type: 3}

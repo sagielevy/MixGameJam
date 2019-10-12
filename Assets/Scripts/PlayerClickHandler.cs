@@ -8,25 +8,32 @@ namespace Assets.Scripts
         [SerializeField] private FloatReference animateTimeSeconds;
         [SerializeField] private LevelConfigurationReference configurationReference;
         [SerializeField] private BooleanReference animate;
+        [SerializeField] private BooleanReference levelPlayable;
+        [SerializeField] private LevelHandler levelHandler;
         [SerializeField] private TrailSpawner prefab;
 
         private float clickStartTime;
         private TrailSpawner currSpawner;
 
-        private void Update()
+        private void FixedUpdate()
         {
-            if (Time.time - clickStartTime >= animateTimeSeconds.GetValue())
+            if (animate.GetValue() && Time.unscaledTime - clickStartTime >= animateTimeSeconds.GetValue())
             {
                 animate.SetValue(false);
+                levelHandler.AttemptPlayerSolution(currSpawner);
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                HandlePlayerClick();
             }
         }
 
         private void HandlePlayerClick()
         {
-            // Ignore extra clicks while animating
-            if (Time.time - clickStartTime < animateTimeSeconds.GetValue())
+            // Ignore clicks if not allowed
+            if (animate.GetValue() || levelPlayable.GetValue())
             {
-                ClearOldTrail();
                 return;
             }
 
@@ -34,6 +41,7 @@ namespace Assets.Scripts
             
             if (Physics.Raycast(clickRay.origin, clickRay.direction, out var hit))
             {
+                ClearOldTrail();
                 StartTrail(hit);
             }
         }
@@ -49,7 +57,7 @@ namespace Assets.Scripts
         private void StartTrail(RaycastHit hit)
         {
             currSpawner = Instantiate(prefab, hit.point, Quaternion.identity, hit.transform);
-            clickStartTime = Time.time;
+            clickStartTime = Time.unscaledTime;
             animate.SetValue(true);
         }
     }

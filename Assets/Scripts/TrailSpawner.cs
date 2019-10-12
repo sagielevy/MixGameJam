@@ -20,7 +20,7 @@ namespace Assets.Scripts
             samples = new List<Vector3>();
             trailRenderer = GetComponent<TrailRenderer>();
             trailRenderer.time = animateTimeSeconds.GetValue(); // TODO set more?
-            startTime = Time.time;
+            startTime = Time.unscaledTime;
         }
 
         public List<Vector3> GetSampledLocations()
@@ -30,14 +30,14 @@ namespace Assets.Scripts
 
         private void FixedUpdate()
         {
-            if (Time.time - startTime >= animateTimeSeconds.GetValue())
+            if (Time.unscaledTime - startTime >= animateTimeSeconds.GetValue())
             {
                 return;
             }
 
-            if (Time.time - lastSampleTime >= sampleIntervalTimeSeconds.GetValue())
+            if (Time.unscaledTime - lastSampleTime >= sampleIntervalTimeSeconds.GetValue())
             {
-                lastSampleTime = Time.time;
+                lastSampleTime = Time.unscaledTime;
                 samples.Add(transform.position);
             }
         }

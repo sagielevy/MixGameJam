@@ -47,4 +47,6 @@ MonoBehaviour:
   configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
     type: 2}
   animate: {fileID: 11400000, guid: 9bae698b0f2a9aa42bb3039d68356606, type: 2}
+  levelPlayable: {fileID: 11400000, guid: 5dc5d06b117463d40a3ecb37d3d82de0, type: 2}
+  levelHandler: {fileID: 0}
   prefab: {fileID: -7514082944272823768, guid: 505ca6693aa8912458636750f18c7f98, type: 3}

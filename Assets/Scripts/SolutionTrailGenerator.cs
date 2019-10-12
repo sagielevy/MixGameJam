@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.SharedData;
 using UnityEngine;
 
@@ -16,14 +17,21 @@ namespace Assets.Scripts
         private float lastRealInterval;
         private float realInterval;
         private float realAnimateTime;
+        private Action<ITrail> simulationComplete;
 
         private void Start()
         {
             samples = new List<Vector3>();
+        }
+
+        public void StartSimulation(Action<ITrail> simulationComplete)
+        {
+            samples.Clear();
+            this.simulationComplete = simulationComplete;
             speedFactor.SetValue(simulationSpeed);
             realInterval = sampleIntervalSeconds.GetValue() / speedFactor.GetValue();
             realAnimateTime = animateTimeSeconds.GetValue() / speedFactor.GetValue();
-            startTime = Time.time;
+            startTime = Time.unscaledTime;
         }
 
         public List<Vector3> GetSampledLocations()
@@ -33,24 +41,26 @@ namespace Assets.Scripts
 
         private void FixedUpdate()
         {
-            if (Time.time - startTime >= realAnimateTime)
+            if (Time.unscaledTime - startTime >= realAnimateTime)
             {
                 StopSimulation();
                 return;
             }
 
-            if (Time.time - lastRealInterval >= realInterval)
+            if (Time.unscaledTime - lastRealInterval >= realInterval)
             {
-                lastRealInterval = Time.time;
+                lastRealInterval = Time.unscaledTime;
                 samples.Add(transform.position);
             }
         }
 
         private void StopSimulation()
         {
+            if (simulationComplete == null) return;
+            
             speedFactor.SetValue(1);
-
-            // TODO call generate level again. Send generated samples
+            simulationComplete(this);
+            simulationComplete = null;
         }
     }
 }
