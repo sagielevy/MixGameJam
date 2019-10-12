@@ -34,9 +34,18 @@ namespace Assets.Scripts
                 levelObjects[i] = obj;
             }
 
-            Vector3 solutionPosition = new Vector3();
+            int solultionObj = Random.Range(0, objsAmount);
+            float theta = Random.Range(0.0f, 180.0f);
+            float phi = Random.Range(0.0f, 360.0f);
+            float radius = levelObjects[solultionObj].scale / 2;
+            float xVal = radius * Mathf.Sin(theta) * Mathf.Cos(phi);
+            float yVal = radius * Mathf.Sin(theta) * Mathf.Sin(phi);
+            float zVal = radius * Mathf.Cos(theta);
+            Vector3 solutionPosition = new Vector3(xVal,yVal,zVal);
+            
             LevelConfiguration levelConfig = new LevelConfiguration();
             levelConfig.items = levelObjects;
+            levelConfig.solutionItemId = solultionObj;
             levelConfig.solutionStartPosition = solutionPosition;
             return levelConfig;
         }
