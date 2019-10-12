@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
+
 namespace Assets.Scripts
 {
     public class LevelGenerator : MonoBehaviour
     {
-        [SerializeField] private int minItemCount = 1;
-        [SerializeField] private int maxItemCount = 3;
+        [SerializeField] private int minItemCount = 2;
+        [SerializeField] private int maxItemCount = 2;
         [SerializeField] private float worldRadius = 10;
         [SerializeField] private float minRotationSpeed = 50;
         [SerializeField] private float maxRotationSpeed = 200;
@@ -51,6 +53,10 @@ namespace Assets.Scripts
                 }
             }
         }
+        
+        // filth
+        private int colorUsed = 0;
+        List<Color> colors = new List<Color> { Color.red, Color.green, Color.blue, Color.yellow, Color.white, Color.magenta };
 
         private void CreateItems()
         {
@@ -65,6 +71,20 @@ namespace Assets.Scripts
                                                 element => element.GetId() == item.parentId).gameObject;          
                 newItemObject.transform.parent = parent.transform;
                 newItemObject.transform.localPosition = item.startingPosition;
+
+                
+                if (parent == world.gameObject) {
+                    newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
+                    colorUsed++;
+                } else {
+                    newItemObject.GetComponent<MeshRenderer>().material.SetColor(
+                        "son_color",
+                        new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
+                        parent.GetComponent<MeshRenderer>().material.color.g,
+                        parent.GetComponent<MeshRenderer>().material.color.b
+  ));
+
+                }
             }
         }
     }
