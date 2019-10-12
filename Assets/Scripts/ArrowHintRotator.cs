@@ -5,17 +5,12 @@ namespace Assets.Scripts
     public class ArrowHintRotator : MonoBehaviour
     {
         [SerializeField] private float rotateSpeed = 1.5f;
-        private Vector3 rotateDir;
-
-        public void SetRotateDir(Vector3 rotateDir)
-        {
-            this.rotateDir = rotateDir;
-        }
+        [SerializeField] private Transform localRotate;
 
         private void Update()
         {
-            transform.localRotation =
-                Quaternion.Euler(rotateDir * Time.deltaTime * rotateSpeed) * transform.localRotation;
+            localRotate.localRotation =
+                Quaternion.Euler(Vector3.up * Time.deltaTime * rotateSpeed) * localRotate.localRotation;
         }
     }
 }

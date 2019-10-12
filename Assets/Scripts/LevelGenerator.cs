@@ -87,26 +87,25 @@ namespace Assets.Scripts
                     arrowsHint.transform.position = newItemObject.transform.position;
                     arrowsHint.transform.localRotation = newItemObject.transform.localRotation;
                     arrowsHint.transform.localScale *= item.scale;
-                    arrowsHint.SetRotateDir(item.rotateDirection);
                     rotators.Add(arrowsHint);
                 }
 
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection, arrowsHint);
 
-                //if (parent == world.gameObject) 
-                //{
-                //    newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
-                //    colorUsed++;
-                //} 
-                //else 
-                //{
-                //    newItemObject.GetComponent<MeshRenderer>().material.SetColor(
-                //        "son_color",
-                //        new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
-                //        parent.GetComponent<MeshRenderer>().material.color.g,
-                //        parent.GetComponent<MeshRenderer>().material.color.b));
+                if (parent == world.gameObject)
+                {
+                    newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
+                    colorUsed++;
+                }
+                else
+                {
+                    newItemObject.GetComponent<MeshRenderer>().material.SetColor(
+                        "son_color",
+                        new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
+                        parent.GetComponent<MeshRenderer>().material.color.g,
+                        parent.GetComponent<MeshRenderer>().material.color.b));
 
-                //}
+                }
             }
         }
     }
