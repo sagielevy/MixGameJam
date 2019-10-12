@@ -22,11 +22,6 @@ namespace Assets.Scripts
             return Id;
         }
 
-        void Start()
-        {
-            rotationVector = rotationVector.normalized;
-        }
-
         void FixedUpdate()
         {
             if (animate.GetValue())
