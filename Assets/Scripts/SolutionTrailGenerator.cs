@@ -7,6 +7,7 @@ namespace Assets.Scripts
 {
     public class SolutionTrailGenerator : MonoBehaviour, ITrail
     {
+        [SerializeField] private BooleanReference animate;
         [SerializeField] private FloatReference sampleIntervalSeconds;
         [SerializeField] private FloatReference animateTimeSeconds;
         [SerializeField] private FloatReference speedFactor;
@@ -29,6 +30,7 @@ namespace Assets.Scripts
             samples.Clear();
             this.simulationComplete = simulationComplete;
             speedFactor.SetValue(simulationSpeed);
+            animate.SetValue(true);
             realInterval = sampleIntervalSeconds.GetValue() / speedFactor.GetValue();
             realAnimateTime = animateTimeSeconds.GetValue() / speedFactor.GetValue();
             startTime = Time.unscaledTime;
@@ -57,7 +59,8 @@ namespace Assets.Scripts
         private void StopSimulation()
         {
             if (simulationComplete == null) return;
-            
+
+            animate.SetValue(false);
             speedFactor.SetValue(1);
             simulationComplete(this);
             simulationComplete = null;

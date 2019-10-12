@@ -32,7 +32,7 @@ namespace Assets.Scripts
         private void HandlePlayerClick()
         {
             // Ignore clicks if not allowed
-            if (animate.GetValue() || levelPlayable.GetValue())
+            if (animate.GetValue() || !levelPlayable.GetValue())
             {
                 return;
             }

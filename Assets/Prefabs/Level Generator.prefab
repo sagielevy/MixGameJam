@@ -45,11 +45,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minItemCount: 1
   maxItemCount: 3
-  worldRadius: 10
+  worldRadius: 6
   minRotationSpeed: 50
   maxRotationSpeed: 200
   minScale: 1
-  maxScale: 1
+  maxScale: 3
   world: {fileID: 0}
   configurationReference: {fileID: 11400000, guid: eb1c8c3aba3984245bc49df5d9cd6298,
     type: 2}
