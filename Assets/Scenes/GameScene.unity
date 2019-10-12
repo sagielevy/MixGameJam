@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -648,7 +648,12 @@ PrefabInstance:
     - target: {fileID: 2255518715720965024, guid: 1fb83482b17e58a4d98f40f2b8891980,
         type: 3}
       propertyPath: maxItemCount
-      value: 1
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255518715720965024, guid: 1fb83482b17e58a4d98f40f2b8891980,
+        type: 3}
+      propertyPath: minItemCount
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fb83482b17e58a4d98f40f2b8891980, type: 3}
@@ -659,6 +664,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1085228716}
     m_Modifications:
+    - target: {fileID: 3585523167114041885, guid: 96781205af87ea14a900734839ba0a37,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3585523167114041883, guid: 96781205af87ea14a900734839ba0a37,
         type: 3}
       propertyPath: m_Name
@@ -768,11 +778,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3585523167114041885, guid: 96781205af87ea14a900734839ba0a37,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96781205af87ea14a900734839ba0a37, type: 3}
@@ -1027,6 +1032,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: SolutionTrailGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 7451304922045897168, guid: 71d9984eaa135f44fbc6ff0ec771db30,
+        type: 3}
+      propertyPath: solutionRenderer
+      value: 
+      objectReference: {fileID: 1876892059}
+    - target: {fileID: 7451304922045897168, guid: 71d9984eaa135f44fbc6ff0ec771db30,
+        type: 3}
+      propertyPath: solutionViewer
+      value: 
+      objectReference: {fileID: 1876892058}
     - target: {fileID: 7451304922045897169, guid: 71d9984eaa135f44fbc6ff0ec771db30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1082,16 +1097,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7451304922045897168, guid: 71d9984eaa135f44fbc6ff0ec771db30,
-        type: 3}
-      propertyPath: solutionRenderer
-      value: 
-      objectReference: {fileID: 1876892059}
-    - target: {fileID: 7451304922045897168, guid: 71d9984eaa135f44fbc6ff0ec771db30,
-        type: 3}
-      propertyPath: solutionViewer
-      value: 
-      objectReference: {fileID: 1876892058}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71d9984eaa135f44fbc6ff0ec771db30, type: 3}
 --- !u!1001 &8706152638479031173

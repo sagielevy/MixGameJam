@@ -55,7 +55,7 @@ namespace Assets.Scripts
                 }
                 else
                 {
-                    obj.startingPosition = new Vector3((obj.scale + obj.parent.scale) / 2, 0, 0);
+                    obj.startingPosition = new Vector3((obj.scale + obj.parent.scale)/2.0f, 0, 0);
                 }
                 obj.rotateDirection = generateRandVec3(worldRadius);
                 levelObjects.Add(id, obj);

@@ -17,16 +17,21 @@ namespace Assets.Scripts
         [SerializeField] private ItemAnimator world;
         [SerializeField] private LevelConfigurationReference configurationReference;
 
+        private int colorUsed;
+        List<Color> colors;
+
         [SerializeField] private ArrowHintRotator arrowsPrefab;
         [SerializeField] private ItemAnimator spherePrefab;
 
         private ILevelGenerator algorithm;
         private List<ArrowHintRotator> rotators;
 
+
         private void Awake()
         {
             algorithm = new LevelGeneratorAlgorithm();
             rotators = new List<ArrowHintRotator>();
+            colors = new List<Color> { Color.red, Color.green, Color.blue, Color.yellow, Color.white, Color.magenta };
         }
 
         public void GenerateNewLevel()
@@ -63,12 +68,9 @@ namespace Assets.Scripts
             rotators.Clear();
         }
         
-        // filth
-        private int colorUsed = 0;
-        List<Color> colors = new List<Color> { Color.red, Color.green, Color.blue, Color.yellow, Color.white, Color.magenta };
-
         private void CreateItems()
         {
+            colorUsed = 0;
             foreach (var item in configurationReference.GetLevelConfiguration().items)
             {
                 var newItemObject = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
@@ -93,20 +95,20 @@ namespace Assets.Scripts
 
                 newItemObject.SetItemData(item.id, item.rotationSpeed, item.rotateDirection, arrowsHint);
 
-                //if (parent == world.gameObject) 
-                //{
-                //    newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
-                //    colorUsed++;
-                //} 
-                //else 
-                //{
-                //    newItemObject.GetComponent<MeshRenderer>().material.SetColor(
-                //        "son_color",
-                //        new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
-                //        parent.GetComponent<MeshRenderer>().material.color.g,
-                //        parent.GetComponent<MeshRenderer>().material.color.b));
+                if (parent == world.gameObject)
+                {
+                    newItemObject.GetComponent<MeshRenderer>().material.color = colors[colorUsed];
+                    colorUsed++;
+                }
+                else
+                {
+                    newItemObject.GetComponent<MeshRenderer>().material.SetColor(
+                        "son_color",
+                        new Color(parent.GetComponent<MeshRenderer>().material.color.r + 15,
+                        parent.GetComponent<MeshRenderer>().material.color.g,
+                        parent.GetComponent<MeshRenderer>().material.color.b));
 
-                //}
+                }
             }
         }
     }
