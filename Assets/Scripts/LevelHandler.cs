@@ -57,6 +57,7 @@ namespace Assets.Scripts
         {
             levelPlayable.SetValue(false);
             yield return new WaitForSeconds(3);
+            levelGenerator.LoadGeneratedLevel();
             levelPlayable.SetValue(true);
         }
 
