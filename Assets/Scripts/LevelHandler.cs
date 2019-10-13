@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.SharedData;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.Scripts
@@ -26,7 +27,7 @@ namespace Assets.Scripts
             NewLevel();
         }
 
-        private void NewLevel()
+        public void NewLevel()
         {
             loadingScreen.enabled = true;
             levelPlayable.SetValue(false);

@@ -10,7 +10,7 @@ namespace Assets.Scripts
         private void Update()
         {
             localRotate.localRotation =
-                Quaternion.Euler(Vector3.up * Time.deltaTime * rotateSpeed) * localRotate.localRotation;
+                Quaternion.Euler(Vector3.down * Time.deltaTime * rotateSpeed) * localRotate.localRotation;
         }
     }
 }

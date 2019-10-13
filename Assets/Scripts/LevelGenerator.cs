@@ -56,8 +56,9 @@ namespace Assets.Scripts
             {
                 if (item != null)
                 {
-                    // Must destroy immediate so that these objects will not be referenced during this frame
-                    DestroyImmediate(item.gameObject);
+                    // Items must no longer be children of world, as they still exist during this frame
+                    item.transform.parent = null;
+                    Destroy(item.gameObject);
                 }
             }
 

@@ -7,7 +7,7 @@ namespace Assets.Scripts
     {
         private LineRenderer lineRenderer;
 
-        private void Start()
+        private void Awake()
         {
             lineRenderer = GetComponent<LineRenderer>();
         }

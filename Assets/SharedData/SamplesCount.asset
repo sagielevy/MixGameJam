@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40e890501280b04c856dd6739191443, type: 3}
   m_Name: SamplesCount
   m_EditorClassIdentifier: 
-  value: 200
+  value: 2000
