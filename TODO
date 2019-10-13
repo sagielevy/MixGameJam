@@ -1,0 +1,7 @@
+* Textures and background and shit
+* Continue animating on success
+* Avoid placing solution position on untouchable surface (between two balls and such)
+* Noam: Be able to solve with shift of sampels (e.g. a ring of the same size can be generated on both poles of the correct sphere
+* Way better UX - place the solution somewhere relative to the camera? The zoom is a big problem because it changes the scale of everything so it's hard to tell what size the solution should be.
+* menu and stuff
+* music and sfx
