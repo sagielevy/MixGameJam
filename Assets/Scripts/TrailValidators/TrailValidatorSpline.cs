@@ -35,7 +35,7 @@ namespace Assets.Scripts
             // this can be done because we have ordering on all points.
             // http://nghiaho.com/?page_id=671
 
-            var H = np.dot(exp_normalized, act_normalized.T);
+            var H = np.dot(exp_normalized, act_normalized.T); // H is 2x2, if it is nxn then flip the order, and get R_act_to_exp
             var (U, S, V) = np.linalg.svd(H);
             if ((double)np.linalg.det(V) < 0)
             {
