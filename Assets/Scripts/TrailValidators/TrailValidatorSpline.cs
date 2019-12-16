@@ -11,10 +11,7 @@ namespace Assets.Scripts
 {
     class TrailValidatorSpline : ITrailValidator
     {
-        private float threshold = Mathf.Infinity;
-        private int spline;
-
-        public bool Validate(ITrail expected, ITrail actual, float threshold)
+         public bool Validate(ITrail expected, ITrail actual, float threshold)
         {
             var expectedSamples = expected.GetSampledLocations();
             var actualSamples = actual.GetSampledLocations();
@@ -34,9 +31,23 @@ namespace Assets.Scripts
             var act_mean = np.mean(np_act, one);
             var act_normalized = np_act - act_mean;
 
+            // now use rigid body transform optimization, to find the matrix that registers both curves.
+            // this can be done because we have ordering on all points.
+            // http://nghiaho.com/?page_id=671
 
+            var H = np.dot(exp_normalized, act_normalized.T);
+            var (U, S, V) = np.linalg.svd(H);
+            if ((double)np.linalg.det(V) < 0)
+            {
+                V[":, 2"] = -V[":, 2"];
+            }
+            var R_exp_to_act = np.dot(V, U.T);
 
-            return true;
+            //apply rotation on exp and calculate mse
+            var exp_rotated = np.dot(R_exp_to_act, exp_normalized);
+            var error = np.linalg.norm(exp_rotated - act_normalized);
+
+            return error < threshold;
         }
 
         private static (Numpy.NDarray<double>, Numpy.NDarray<double>) prepare_np_input(IEnumerable<Vector3> expectedSamples, IEnumerable<Vector3> actualSamples)
